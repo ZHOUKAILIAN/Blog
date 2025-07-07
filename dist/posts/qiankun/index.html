@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>qiankun - ZHOUKAILIAN Personal Blog</title><meta name="Description" content="qiankun 框架源码分析"><meta property="og:url" content="http://example.org/posts/qiankun/">
+  <meta property="og:site_name" content="ZHOUKAILIAN Personal Blog">
+  <meta property="og:title" content="qiankun">
+  <meta property="og:description" content="qiankun 框架源码分析">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-07-06T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-06T00:00:00+00:00">
+    <meta property="article:tag" content="微前端">
+    <meta property="article:tag" content="Web">
+    <meta property="og:image" content="http://example.org/posts/qiankun/featured-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://example.org/posts/qiankun/featured-image.png">
+  <meta name="twitter:title" content="qiankun">
+  <meta name="twitter:description" content="qiankun 框架源码分析">
+<meta name="application-name" content="ZHOUKAILIAN Personal Blog">
+<meta name="apple-mobile-web-app-title" content="ZHOUKAILIAN Personal Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/posts/qiankun/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "qiankun",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/posts\/qiankun\/"
+        },"genre": "posts","keywords": "微前端, web","wordcount":  774 ,
+        "url": "http:\/\/example.org\/posts\/qiankun\/","datePublished": "2025-07-06T00:00:00+00:00","dateModified": "2025-07-06T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "ZHOUKAILIAN"
+            },"description": "qiankun 框架源码分析"
+    }
+    </script></head>
+    <body data-header-desktop="normal" data-header-mobile="normal"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="ZHOUKAILIAN Personal Blog">ZHOUKAILIAN Personal Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/life/"> Life </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="ZHOUKAILIAN Personal Blog">ZHOUKAILIAN Personal Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/life/" title="">Life</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">qiankun</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>ZHOUKAILIAN</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-07-06">2025-07-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;774 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#沙箱极简版">沙箱极简版</a>
+      <ul>
+        <li><a href="#snapshotsandbox">SnapshotSandbox</a></li>
+        <li><a href="#proxysandbox">ProxySandbox</a></li>
+      </ul>
+    </li>
+    <li><a href="#qiankun-沙箱源码分析">qiankun 沙箱源码分析</a>
+      <ul>
+        <li><a href="#snapshotsandbox-源码解析">SnapshotSandbox 源码解析</a></li>
+        <li><a href="#legacysandbox-源码解析">LegacySandbox 源码解析</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="概述">概述</h1>
+<p>  qiankun 作为一款微前端领域的知名框架，其建立在 single-spa 基础上。相较于 single-spa，qiankun 做了两件重要的事情，其一是加载资源，第二是进行资源隔离。</p>
+<h1 id="qiankun-js-隔离的发展史">qiankun JS 隔离的发展史</h1>
+<p>  一个微前端最重要的就是 js 隔离以及 css 隔离，qiankun 有三种 js 隔离机制，分别是 SnapshotSandbox（快照沙箱）、LegacySandbox（支持单应用的代理沙箱）、ProxySandbox（支持多应用的代理沙箱）。</p>
+<p>  在 qiankun 的微前端架构中，最初的沙箱机制是通过 SnapshotSandbox 实现的。该方法需要遍历 window 上的所有属性，因此性能较差。随着 ES6 的普及，Proxy 的引入提供了一种更高效的解决方案，这就诞生了 LegacySandbox。LegacySandbox 使用 Proxy 来实现与 SnapshotSandbox 相似的功能，但性能更好。不过，由于会污染全局的 window 对象，它仅支持单个微应用的运行。随着更高效的机制出现，LegacySandbox 被替代为 ProxySandbox。ProxySandbox 支持在同一页面上运行多个微应用，因此称为支持多应用的代理沙箱。未来，LegacySandbox 可能会被淘汰，因为 ProxySandbox 能够实现其所有功能。由于向下兼容的原因，SnapshotSandbox 可能会与 ProxySandbox 长期共存。</p>
+<h2 id="沙箱极简版">沙箱极简版</h2>
+<h3 id="snapshotsandbox">SnapshotSandbox</h3>
+<p>  以下代码是 SnapshotSandBox 实现的极简版，快照沙箱的核心逻辑很简单，就是在激活沙箱和沙箱失活的时候各做两件事。</p>
+<p>沙箱激活：</p>
+<ul>
+<li>
+<p>记录 window 当时的状态（快照）</p>
+</li>
+<li>
+<p>恢复沙箱上次失活时记录的对 window 的状态改变，即在上次沙箱激活期间对 window 所做的修改，现在也保持这些修改。</p>
+</li>
+</ul>
+<p>沙箱失活：</p>
+<ul>
+<li>
+<p>记录 window 上有哪些状态发生了变化（沙箱自激活开始，到失活的这段时间）</p>
+</li>
+<li>
+<p>清除沙箱在激活之后在 window 上改变的状态，从代码可以看出，就是让 window 此时的属性状态和刚激活时候的 window 的属性状态进行对比，不同的属性状态就以快照为准，恢复到未改变之前的状态。</p>
+</li>
+</ul>
+<pre tabindex="0"><code>class SnapshotSandBox {
+  windowSnapshot = {};
+  modifyPropsMap = {};
+
+  active() {
+    for (const prop in window) {
+      this.windowSnapshot[prop] = window[prop];
+    }
+
+    Object.keys(this.modifyPropsMap).forEach((prop) =&gt; {
+      window[prop] = this.modifyPropsMap[prop];
+    });
+  }
+
+  inactive() {
+    for (const prop in window) {
+      if (window[prop] !== this.windowSnapshot[prop]) {
+        this.modifyPropsMap[prop] = window[prop];
+        window[prop] = this.windowSnapshot[prop];
+      }
+    }
+  }
+}
+
+// 验证:
+
+let snapshotSandBox = new SnapshotSandBox();
+
+snapshotSandBox.active();
+
+window.city = &#34;Beijing&#34;;
+
+console.log(&#34;window.city-01:&#34;, window.city);
+
+snapshotSandBox.inactive();
+
+console.log(&#34;window.city-02:&#34;, window.city);
+
+snapshotSandBox.active();
+
+console.log(&#34;window.city-03:&#34;, window.city);
+
+snapshotSandBox.inactive();
+
+// 输出：
+
+// window.city-01: Beijing
+
+// window.city-02: undefined
+
+// window.city-03: Beijing
+</code></pre><pre tabindex="0"><code>
+从上面可以看出，SnapshotSandbox 存在两个重要的问题：
+
+- 会改变全局 window 的属性，如果同时运行多个微应用，多个应用同时改写 window 上的属性，势必会出现状态混乱，这也就是为什么快照沙箱无法支持多个微应用同时运行的原因。
+
+- 会通过 `for(prop in window){}` 的方式来遍历 window 上的所有属性，window 属性众多，很耗费性能。
+
+### LegacySandbox
+
+以下代码是 LegacySandbox 实现的极简版，LegacySandbox 的核心逻辑就是通过三个变量来记录沙箱激活后 window 发生的变化（addedPropsMapInSandbox、modifiedPropsOriginalValueMapInSandbox、currentUpdatedPropsValueMap）
+
+- addedPropsMapInSandbox：存储在沙箱运行期间新增的 window 属性。使用 Map 对象来记录属性名和对应的值。
+
+- modifiedPropsOriginalValueMapInSandbox：存储在沙箱运行期间被修改的 window 属性及其原始值。用于在沙箱失活时恢复这些属性的原始状态。
+
+- currentUpdatedPropsValueMap：存储当前更新的 window 属性及其值。用于在沙箱激活时应用这些改变。
+
+```javascript
+class LegacySandBox {
+  addedPropsMapInSandbox = new Map();
+
+  modifiedPropsOriginalValueMapInSandbox = new Map();
+
+  currentUpdatedPropsValueMap = new Map();
+
+  proxyWindow;
+
+  setWindowProp(prop, value, toDelete = false) {
+    if (value === undefined &amp;&amp; toDelete) {
+      delete window[prop];
+    } else {
+      window[prop] = value;
+    }
+  }
+
+  active() {
+    this.currentUpdatedPropsValueMap.forEach((value, prop) =&gt;
+      this.setWindowProp(prop, value)
+    );
+  }
+
+  inactive() {
+    this.modifiedPropsOriginalValueMapInSandbox.forEach((value, prop) =&gt;
+      this.setWindowProp(prop, value)
+    );
+
+    this.addedPropsMapInSandbox.forEach((_, prop) =&gt;
+      this.setWindowProp(prop, undefined, true)
+    );
+  }
+
+  constructor() {
+    const fakeWindow = Object.create(null);
+
+    this.proxyWindow = new Proxy(fakeWindow, {
+      set: (target, prop, value, receiver) =&gt; {
+        const originalVal = window[prop];
+
+        if (!window.hasOwnProperty(prop)) {
+          this.addedPropsMapInSandbox.set(prop, value);
+        } else if (!this.modifiedPropsOriginalValueMapInSandbox.has(prop)) {
+          this.modifiedPropsOriginalValueMapInSandbox.set(prop, originalVal);
+        }
+
+        this.currentUpdatedPropsValueMap.set(prop, value);
+
+        window[prop] = value;
+      },
+
+      get: (target, prop, receiver) =&gt; {
+        return target[prop];
+      },
+    });
+  }
+}
+
+// 验证：
+
+let legacySandBox = new LegacySandBox();
+
+legacySandBox.active();
+
+legacySandBox.proxyWindow.city = &#34;Beijing&#34;;
+
+console.log(&#34;window.city-01:&#34;, window.city);
+
+legacySandBox.inactive();
+
+console.log(&#34;window.city-02:&#34;, window.city);
+
+legacySandBox.active();
+
+console.log(&#34;window.city-03:&#34;, window.city);
+
+legacySandBox.inactive();
+
+// 输出：
+
+// window.city-01: Beijing
+
+// window.city-02: undefined
+
+// window.city-03: Beijing
+</code></pre><p>从上面的代码可以看出，其实现的功能和快照沙箱是一模一样的，LegacySandBox 通过 Proxy 拦截对 window 对象的修改，实现一个简单的沙箱机制。记录沙箱运行期间对 window 的新增和修改，并在沙箱激活和失活时应用或恢复这些变化。这样在后续的状态还原时候就不再需要遍历 window 的所有属性来进行对比，提升程序运行的性能。但是这仍然改变不了这种机制仍然污染了 window 的状态的事实，因此也就无法承担起同时支持多个微应用运行的任务。</p>
+<h3 id="proxysandbox">ProxySandbox</h3>
+<p>以下代码是 ProxySandbox 实现的极简版</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">ProxySandBox</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">proxyWindow</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">isRunning</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">active</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">isRunning</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">inactive</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">isRunning</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">fakeWindow</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">proxyWindow</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">fakeWindow</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">set</span><span class="o">:</span> <span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">receiver</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isRunning</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">target</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nx">get</span><span class="o">:</span> <span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="nx">receiver</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">target</span> <span class="o">?</span> <span class="nx">target</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">:</span> <span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 验证：
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">proxySandBox1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ProxySandBox</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">proxySandBox2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ProxySandBox</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">proxySandBox1</span><span class="p">.</span><span class="nx">active</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">proxySandBox2</span><span class="p">.</span><span class="nx">active</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">proxySandBox1</span><span class="p">.</span><span class="nx">proxyWindow</span><span class="p">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">&#34;Beijing&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">proxySandBox2</span><span class="p">.</span><span class="nx">proxyWindow</span><span class="p">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">&#34;Shanghai&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;active:proxySandBox1:window.city:&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">proxySandBox1</span><span class="p">.</span><span class="nx">proxyWindow</span><span class="p">.</span><span class="nx">city</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;active:proxySandBox2:window.city:&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">proxySandBox2</span><span class="p">.</span><span class="nx">proxyWindow</span><span class="p">.</span><span class="nx">city</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;window:window.city:&#34;</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">city</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">proxySandBox1</span><span class="p">.</span><span class="nx">inactive</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">proxySandBox2</span><span class="p">.</span><span class="nx">inactive</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;inactive:proxySandBox1:window.city:&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">proxySandBox1</span><span class="p">.</span><span class="nx">proxyWindow</span><span class="p">.</span><span class="nx">city</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;inactive:proxySandBox2:window.city:&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">proxySandBox2</span><span class="p">.</span><span class="nx">proxyWindow</span><span class="p">.</span><span class="nx">city</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;window:window.city:&#34;</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">city</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 输出：
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// active:proxySandBox1:window.city: Beijing
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// active:proxySandBox2:window.city: Shanghai
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// window:window.city: undefined
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// inactive:proxySandBox1:window.city: Beijing
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// inactive:proxySandBox2:window.city: Shanghai
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// window:window.city: undefined
+</span></span></span></code></pre></div><p>从上述代码可以看出，ProxySandbox 并不包含状态恢复的逻辑，也无需记录属性值的变化，因为所有的更改都发生在沙箱内部，与 window 无关，window 上的属性始终不受影响。其缺点是无法阻止自执行函数对 window 的直接修改。此外，由于 Proxy 是 ES6 的新特性，不兼容低版本浏览器，因此 SnapshotSandbox 将会长期存在。</p>
+<h2 id="qiankun-沙箱源码分析">qiankun 沙箱源码分析</h2>
+<h3 id="snapshotsandbox-源码解析">SnapshotSandbox 源码解析</h3>
+<p>沙箱类图如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="snapshot-sandbox-class-diagram.png"
+        data-srcset="snapshot-sandbox-class-diagram.png, snapshot-sandbox-class-diagram.png 1.5x, snapshot-sandbox-class-diagram.png 2x"
+        data-sizes="auto"
+        alt="snapshot-sandbox-class-diagram.png"
+        title="SnapshotSandbox 类图" /></p>
+<p>沙箱逻辑如下：</p>
+<ol>
+<li>
+<p>创建实例：首先创建一个 SnapshotSandbox 实例。</p>
+</li>
+<li>
+<p>激活沙箱：</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>记录当前 window 对象的状态作为快照（纯净的 window 状态）。</p>
+</li>
+<li>
+<p>恢复沙箱运行时对 window 对象的修改（修改的属性通过 modifyPropsMap 还原，删除的属性通过 deletePropsSet 删除）。</p>
+</li>
+<li>
+<p>将 sandboxRunning 标志设置为 true，表示沙箱正在运行。</p>
+</li>
+</ul>
+<ol start="3">
+<li>停用沙箱：</li>
+</ol>
+<ul>
+<li>
+<p>清空 modifyPropsMap 以及 deletePropsSet。</p>
+</li>
+<li>
+<p>恢复 window 至快照状态（恢复是通过遍历当前状态和快照状态时的区别，若是属性不同得记录在 modifyPropsMap 里，若是被删除的属性则记录在 deletePropsSet 以便激活时使用）。</p>
+</li>
+<li>
+<p>将 sandboxRunning 标志设置为 false，表示沙箱已停止运行。</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">* @author Hydrogen
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">* @since 2020-3-8
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">type</span> <span class="p">{</span> <span class="nx">SandBox</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;../interfaces&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">SandBoxType</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;../interfaces&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">iter</span><span class="p">(</span><span class="nx">obj</span><span class="o">:</span> <span class="k">typeof</span> <span class="nb">window</span> <span class="o">|</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">any</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">callbackFn</span><span class="o">:</span> <span class="p">(</span><span class="nx">prop</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// eslint-disable-next-line guard-for-in, no-restricted-syntax
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// patch for clearInterval for compatible reason, see #1490
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="o">||</span> <span class="nx">prop</span> <span class="o">===</span> <span class="s1">&#39;clearInterval&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">callbackFn</span><span class="p">(</span><span class="nx">prop</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">* 基于 diff 方式实现的沙箱，用于不支持 Proxy 的低版本浏览器
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">SnapshotSandbox</span> <span class="kr">implements</span> <span class="nx">SandBox</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">proxy</span><span class="o">:</span> <span class="nx">WindowProxy</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">name</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">type</span><span class="o">:</span> <span class="nx">SandBoxType</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">sandboxRunning</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">private</span> <span class="nx">windowSnapshot</span><span class="o">!:</span> <span class="nx">Window</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">private</span> <span class="nx">modifyPropsMap</span><span class="o">:</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">any</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">private</span> <span class="nx">deletePropsSet</span><span class="o">:</span> <span class="nx">Set</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Set</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">constructor</span><span class="p">(</span><span class="nx">name</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">proxy</span> <span class="o">=</span> <span class="nb">window</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">SandBoxType</span><span class="p">.</span><span class="nx">Snapshot</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">active</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 记录当前快照
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span> <span class="o">=</span> <span class="p">{}</span> <span class="nx">as</span> <span class="nx">Window</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">iter</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 恢复之前的变更
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">modifyPropsMap</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">p</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">modifyPropsMap</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 删除之前删除的属性
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">deletePropsSet</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">p</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">delete</span> <span class="nb">window</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">sandboxRunning</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">inactive</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">modifyPropsMap</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">deletePropsSet</span><span class="p">.</span><span class="nx">clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">iter</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">!==</span> <span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span><span class="p">[</span><span class="nx">prop</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 记录变更，恢复环境
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">modifyPropsMap</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">iter</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span><span class="p">,</span> <span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 记录被删除的属性，恢复环境
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">deletePropsSet</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">prop</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="s1">&#39;development&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="sb">`[qiankun:sandbox] </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb"> origin window restore...`</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">modifyPropsMap</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">deletePropsSet</span><span class="p">.</span><span class="nx">keys</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">sandboxRunning</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">patchDocument</span><span class="p">()</span><span class="o">:</span> <span class="k">void</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="legacysandbox-源码解析">LegacySandbox 源码解析</h3>
+<p>沙箱类图如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="legacy-sandbox-class-diagram.png"
+        data-srcset="legacy-sandbox-class-diagram.png, legacy-sandbox-class-diagram.png 1.5x, legacy-sandbox-class-diagram.png 2x"
+        data-sizes="auto"
+        alt="legacy-sandbox-class-diagram.png"
+        title="LegacySandbox 类图" /></p>
+<p>沙箱逻辑图如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="legacy-sandbox-logic-diagram.png"
+        data-srcset="legacy-sandbox-logic-diagram.png, legacy-sandbox-logic-diagram.png 1.5x, legacy-sandbox-logic-diagram.png 2x"
+        data-sizes="auto"
+        alt="legacy-sandbox-logic-diagram.png"
+        title="LegacySandbox 逻辑图" /></p>
+<ol>
+<li>
+<p>创建实例：初始化一个 LegacySandbox 实例，准备沙箱环境。</p>
+</li>
+<li>
+<p>激活沙箱：</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>将 currentUpdatedPropsValueMap 的值应用到 window，以恢复沙箱内的修改。</p>
+</li>
+<li>
+<p>设置 sandboxRunning 为 true，表示沙箱正在运行。</p>
+</li>
+</ul>
+<ol start="3">
+<li>停用沙箱：</li>
+</ol>
+<pre tabindex="0"><code></code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-07-06</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://example.org/posts/qiankun/" data-title="qiankun" data-hashtags="微前端,web"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://example.org/posts/qiankun/" data-hashtag="微前端"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://example.org/posts/qiankun/" data-title="qiankun"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://example.org/posts/qiankun/" data-title="qiankun"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://example.org/posts/qiankun/" data-title="qiankun"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a>,&nbsp;<a href="/tags/web/">Web</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+</article></div>
+            </main></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="css/custom.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

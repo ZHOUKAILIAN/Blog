@@ -1,0 +1,40 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>ZHOUKAILIAN Personal Blog</title>
+        <link>http://example.org/</link>
+        <description>This is my KeepIt site</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 06 Jul 2025 00:00:00 &#43;0000</lastBuildDate>
+            <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>qiankun</title>
+    <link>http://example.org/posts/qiankun/</link>
+    <pubDate>Sun, 06 Jul 2025 00:00:00 &#43;0000</pubDate>
+    <author>ZHOUKAILIAN</author>
+    <guid>http://example.org/posts/qiankun/</guid>
+    <description><![CDATA[<h1 id="概述">概述</h1>
+<p>  qiankun 作为一款微前端领域的知名框架，其建立在 single-spa 基础上。相较于 single-spa，qiankun 做了两件重要的事情，其一是加载资源，第二是进行资源隔离。</p>
+<h1 id="qiankun-js-隔离的发展史">qiankun JS 隔离的发展史</h1>
+<p>  一个微前端最重要的就是 js 隔离以及 css 隔离，qiankun 有三种 js 隔离机制，分别是 SnapshotSandbox（快照沙箱）、LegacySandbox（支持单应用的代理沙箱）、ProxySandbox（支持多应用的代理沙箱）。</p>
+<p>  在 qiankun 的微前端架构中，最初的沙箱机制是通过 SnapshotSandbox 实现的。该方法需要遍历 window 上的所有属性，因此性能较差。随着 ES6 的普及，Proxy 的引入提供了一种更高效的解决方案，这就诞生了 LegacySandbox。LegacySandbox 使用 Proxy 来实现与 SnapshotSandbox 相似的功能，但性能更好。不过，由于会污染全局的 window 对象，它仅支持单个微应用的运行。随着更高效的机制出现，LegacySandbox 被替代为 ProxySandbox。ProxySandbox 支持在同一页面上运行多个微应用，因此称为支持多应用的代理沙箱。未来，LegacySandbox 可能会被淘汰，因为 ProxySandbox 能够实现其所有功能。由于向下兼容的原因，SnapshotSandbox 可能会与 ProxySandbox 长期共存。</p>
+<h2 id="沙箱极简版">沙箱极简版</h2>
+<h3 id="snapshotsandbox">SnapshotSandbox</h3>
+<p>  以下代码是 SnapshotSandBox 实现的极简版，快照沙箱的核心逻辑很简单，就是在激活沙箱和沙箱失活的时候各做两件事。</p>
+<p>沙箱激活：</p>
+<ul>
+<li>
+<p>记录 window 当时的状态（快照）</p>
+</li>
+<li>
+<p>恢复沙箱上次失活时记录的对 window 的状态改变，即在上次沙箱激活期间对 window 所做的修改，现在也保持这些修改。</p>
+</li>
+</ul>
+<p>沙箱失活：</p>
+<ul>
+<li>
+<p>记录 window 上有哪些状态发生了变化（沙箱自激活开始，到失活的这段时间）</p>
+</li>
+<li>
+<p>清除沙箱在激活之后在 window 上改变的状态，从代码可以看出，就是让 window 此时的属性状态和刚激活时候的 window 的属性状态进行对比，不同的属性状态就以快照为准，恢复到未改变之前的状态。</p>]]></description>
+</item>
+</channel>
+</rss>
