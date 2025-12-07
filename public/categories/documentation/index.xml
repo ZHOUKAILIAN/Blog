@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Documentation on ZHOUKAILIAN Personal Blog</title>
-    <link>http://localhost:62591/categories/documentation/</link>
+    <link>http://localhost:1313/categories/documentation/</link>
     <description>Recent content in Documentation on ZHOUKAILIAN Personal Blog</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <atom:link href="http://localhost:62591/categories/documentation/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/documentation/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
