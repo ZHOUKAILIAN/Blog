@@ -1,0 +1,41 @@
+@startuml kafka-system-architecture
+
+actor User
+
+package "生产者" {
+    component "订单系统" as order
+    component "库存系统" as inventory
+    component "用户行为追踪" as activity
+}
+
+package "Kafka集群" {
+    component "Broker1" as broker1
+    component "Broker2" as broker2
+    component "Broker3" as broker3
+}
+
+package "消费者" {
+    component "订单处理器" as processor
+    component "库存更新器" as updater
+    component "用户分析器" as analyzer
+}
+
+database "数据库" as db
+
+User --> order: 下单
+User --> inventory: 更新库存
+User --> activity: 追踪行为
+
+order --> broker1: 发送事件
+inventory --> broker2: 发送事件
+activity --> broker3: 发送事件
+
+processor --> broker1: 读取事件
+updater --> broker2: 读取事件
+analyzer --> broker3: 读取事件
+
+processor --> db: 存储
+updater --> db: 存储
+analyzer --> db: 存储
+
+@enduml

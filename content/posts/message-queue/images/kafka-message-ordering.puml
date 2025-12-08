@@ -1,0 +1,36 @@
+@startuml kafka-message-ordering
+
+actor "生产者1" as p1
+actor "生产者2" as p2
+actor "生产者3" as p3
+
+component "分区1" as part1
+component "分区2" as part2
+component "分区3" as part3
+
+actor "消费者1" as c1
+actor "消费者2" as c2
+actor "消费者3" as c3
+
+p1 --> part1: 事件A
+p1 --> part1: 事件B
+p2 --> part2: 事件C
+p3 --> part3: 事件D
+
+part1 --> c1: 顺序读取
+part2 --> c2: 读取
+part3 --> c3: 读取
+
+note right of part1
+  分区1保证消息顺序
+end note
+
+note right of part2
+  分区2保证消息顺序
+end note
+
+note right of part3
+  分区3保证消息顺序
+end note
+
+@enduml

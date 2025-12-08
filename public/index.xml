@@ -3,9 +3,124 @@
         <title>ZHOUKAILIAN Personal Blog</title>
         <link>http://localhost:1313/</link>
         <description>This is my KeepIt site</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 06 Jul 2025 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 07 Dec 2025 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>消息队列（MQ）完全指南</title>
+    <link>http://localhost:1313/posts/message-queue/</link>
+    <pubDate>Sun, 07 Dec 2025 00:00:00 &#43;0000</pubDate>
+    <author>ZHOUKAILIAN</author>
+    <guid>http://localhost:1313/posts/message-queue/</guid>
+    <description><![CDATA[<h1 id="消息队列mq完全指南">消息队列（MQ）完全指南</h1>
+<h2 id="1-什么是消息队列">1. 什么是消息队列</h2>
+<p>消息队列（MessageQueue，MQ）是分布式系统中的重要组件。主要是用于解决<strong>异步、解耦、削峰</strong>等问题，通过高效可靠的消息传递机制进行平台无关的数据交流，可以在分布式环境下扩展进程间的通信，基于数据通信来进行分布式系统的集成，以实现高性能、高可用、可伸缩和最终一致性架构。</p>
+<p>使用队列最常见的场景就是<strong>生产者/消费者模式</strong>：生产者生产消息放到队列中，消费者从队列里面获取消息消费。典型架构如下图所示：</p>
+<p></p>
+<h2 id="2-消息队列的作用">2. 消息队列的作用</h2>
+<h3 id="21-异步">2.1 异步</h3>
+<p><strong>举例</strong>：快递员发快递，一定要找到客户面对面送货效率会很低。引用快递驿站后，快递员只需要把快递放到驿站，就可以继续发其他快递去了，客户自行安排时间去驿站取快递。</p>
+<p><strong>作用</strong>：<strong>异步能提高系统的响应速度、吞吐量</strong>。</p>
+<blockquote>
+<p>也可以使用 Future 实现（Java 中）</p></blockquote>
+<h3 id="22-解耦">2.2 解耦</h3>
+<p><strong>举例</strong>：快递员发快递，一定要找到客户面对面送货就一定要等到双方都有空才能完成投递操作，既依赖于用户是否有时间，也依赖于快递员是否有时间。引用快递驿站后，快递员只需要把快递放到驿站，就可以继续发其他快递去了，客户自行安排时间去驿站取快递。</p>
+<p><strong>作用</strong>：</p>
+<ul>
+<li>服务之间进行解耦，才可以<strong>减少服务之间的影响，提高系统整体的稳定性以及可扩展性</strong>。</li>
+<li>另外，解耦后可以实现数据分发。生产者发送一个消息后，可以由一个或者多个消费者进行消费，并且消费者的增加或者减少对生产者没有影响。</li>
+</ul>
+<h3 id="23-削峰">2.3 削峰</h3>
+<p><strong>举例</strong>：虽然长江每年都会涨水，但是下游出水口的速度是基本稳定的，就是因为引入大坝后，可以把水储存起来，下游慢慢排水。</p>
+<p><strong>作用</strong>：<strong>以稳定的系统资源应对突发的流量冲击</strong>（以免系统崩溃，避免使用限流的方式先把数据圈住）</p>
+<h2 id="3-消息队列通信协议">3. 消息队列通信协议</h2>
+<p>由于消息队列执行的是跨应用的信息传递，所以制定底层通信标准非常必要。目前主流的消息队列通信协议标准包括：</p>
+<ul>
+<li><strong>AMQP</strong> (Advanced Message Queuing Protocol)：通用协议，IBM 公司研发</li>
+<li><strong>JMS</strong> (Java Message Service)：专门为 Java 语言服务，SUN 公司研发，一组由 Java 接口组成的 Java 标准</li>
+</ul>
+<h2 id="4-消息队列的选型">4. 消息队列的选型</h2>
+<h3 id="41-主流消息队列产品对比">4.1 主流消息队列产品对比</h3>
+<table>
+  <thead>
+      <tr>
+          <th>特性</th>
+          <th>RabbitMQ</th>
+          <th>ActiveMQ</th>
+          <th>RocketMQ</th>
+          <th>Kafka</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>研发团队</td>
+          <td>Rabbit(公司)</td>
+          <td>Apache(社区)</td>
+          <td>阿里(公司)</td>
+          <td>Apache(社区)</td>
+      </tr>
+      <tr>
+          <td>开发语言</td>
+          <td>Erlang</td>
+          <td>Java</td>
+          <td>Java</td>
+          <td>Scala &amp; Java</td>
+      </tr>
+      <tr>
+          <td>核心机制</td>
+          <td>基于 AMQP 的消息队列模型，使用生产者-消费者模式</td>
+          <td>基于 JMS 的消息传递模型，支持点对点和发布-订阅</td>
+          <td>分布式消息队列，采用主题(Topic)和标签(Tag)方式</td>
+          <td>分布式流平台，通过发布-订阅模型处理</td>
+      </tr>
+      <tr>
+          <td>协议支持</td>
+          <td>XMPP STOMP SMTP</td>
+          <td>XMPP STOMP OpenWire REST</td>
+          <td>自定义协议</td>
+          <td>自定义协议 + HTTP</td>
+      </tr>
+      <tr>
+          <td>客户端支持语言</td>
+          <td>官方支持多种语言</td>
+          <td>Java C/C++ Python PHP 等</td>
+          <td>Java C++</td>
+          <td>官方支持 Java，社区支持多种</td>
+      </tr>
+      <tr>
+          <td>可用性</td>
+          <td>镜像队列</td>
+          <td>主从复制</td>
+          <td>主从复制</td>
+          <td>分区和副本</td>
+      </tr>
+      <tr>
+          <td>单机吞吐量</td>
+          <td>每秒十万左右级别</td>
+          <td>每秒数万级</td>
+          <td>每秒十万+级</td>
+          <td>每秒百万级</td>
+      </tr>
+      <tr>
+          <td>消息延迟</td>
+          <td>微秒级</td>
+          <td>毫秒级</td>
+          <td>毫秒级</td>
+          <td>毫秒以内</td>
+      </tr>
+      <tr>
+          <td>功能特性</td>
+          <td>并发能力强，性能极好，延时低</td>
+          <td>老牌产品，成熟度高</td>
+          <td>MQ 功能完备，扩展性佳</td>
+          <td>专为大数据领域服务</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="5-kafka-详解">5. Kafka 详解</h2>
+<h3 id="51-kafka-架构">5.1 Kafka 架构</h3>
+<p></p>]]></description>
+</item>
+<item>
     <title>qiankun</title>
     <link>http://localhost:1313/posts/qiankun/</link>
     <pubDate>Sun, 06 Jul 2025 00:00:00 &#43;0000</pubDate>
