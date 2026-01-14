@@ -14,7 +14,7 @@ languageName = "English"
     pre = ""
     post = ""
     name = "前端"
-    url = "/categories/frontend/"
+    url = "/tech/frontend/"
     title = ""
   [[menu.main]]
     weight = 2
@@ -22,7 +22,7 @@ languageName = "English"
     pre = ""
     post = ""
     name = "后端"
-    url = "/categories/backend/"
+    url = "/tech/backend/"
     title = ""
   [[menu.main]]
     weight = 3
@@ -30,7 +30,7 @@ languageName = "English"
     pre = ""
     post = ""
     name = "AI"
-    url = "/categories/ai/"
+    url = "/tech/ai/"
     title = ""
   [[menu.main]]
     weight = 4
@@ -38,7 +38,7 @@ languageName = "English"
     pre = ""
     post = ""
     name = "生活"
-    url = "/categories/life/"
+    url = "/life/"
     title = ""
 [params]
   # site default theme ["auto", "light", "dark"]
