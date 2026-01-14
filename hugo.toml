@@ -10,22 +10,35 @@ languageName = "English"
 [menu]
   [[menu.main]]
     weight = 1
-    identifier = "posts"
-    # you can add extra information before the name (HTML format is supported), such as icons
+    identifier = "frontend"
     pre = ""
-    # you can add extra information after the name (HTML format is supported), such as icons
     post = ""
-    name = "Posts"
-    url = "/posts/"
-    # title will be shown when you hover on this menu link
+    name = "前端"
+    url = "/categories/frontend/"
     title = ""
   [[menu.main]]
     weight = 2
-    identifier = "tags"
+    identifier = "backend"
     pre = ""
     post = ""
-    name = "Life"
-    url = "/life/"
+    name = "后端"
+    url = "/categories/backend/"
+    title = ""
+  [[menu.main]]
+    weight = 3
+    identifier = "ai"
+    pre = ""
+    post = ""
+    name = "AI"
+    url = "/categories/ai/"
+    title = ""
+  [[menu.main]]
+    weight = 4
+    identifier = "life"
+    pre = ""
+    post = ""
+    name = "生活"
+    url = "/categories/life/"
     title = ""
 [params]
   # site default theme ["auto", "light", "dark"]
