@@ -3,7 +3,7 @@
         <title>ZHOUKAILIAN Personal Blog</title>
         <link>http://localhost:1313/</link>
         <description>This is my KeepIt site</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 07 Dec 2025 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 13 Jan 2026 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>消息队列（MQ）完全指南</title>
@@ -21,7 +21,8 @@
 <p><strong>举例</strong>：快递员发快递，一定要找到客户面对面送货效率会很低。引用快递驿站后，快递员只需要把快递放到驿站，就可以继续发其他快递去了，客户自行安排时间去驿站取快递。</p>
 <p><strong>作用</strong>：<strong>异步能提高系统的响应速度、吞吐量</strong>。</p>
 <blockquote>
-<p>也可以使用 Future 实现（Java 中）</p></blockquote>
+<p>也可以使用 Future 实现（Java 中）</p>
+</blockquote>
 <h3 id="22-解耦">2.2 解耦</h3>
 <p><strong>举例</strong>：快递员发快递，一定要找到客户面对面送货就一定要等到双方都有空才能完成投递操作，既依赖于用户是否有时间，也依赖于快递员是否有时间。引用快递驿站后，快递员只需要把快递放到驿站，就可以继续发其他快递去了，客户自行安排时间去驿站取快递。</p>
 <p><strong>作用</strong>：</p>
@@ -150,6 +151,87 @@
 </li>
 <li>
 <p>清除沙箱在激活之后在 window 上改变的状态，从代码可以看出，就是让 window 此时的属性状态和刚激活时候的 window 的属性状态进行对比，不同的属性状态就以快照为准，恢复到未改变之前的状态。</p>]]></description>
+</item>
+<item>
+    <title>Garfish 微前端框架隔离机制分析</title>
+    <link>http://localhost:1313/posts/garfish-isolation/</link>
+    <pubDate>Tue, 13 Jan 2026 00:00:00 &#43;0000</pubDate>
+    <author>ZHOUKAILIAN</author>
+    <guid>http://localhost:1313/posts/garfish-isolation/</guid>
+    <description><![CDATA[<h1 id="garfish-微前端框架隔离机制分析">Garfish 微前端框架隔离机制分析</h1>
+<h2 id="框架信息">框架信息</h2>
+<ul>
+<li><strong>框架名称</strong>: Garfish</li>
+<li><strong>版本</strong>: 1.19.4</li>
+<li><strong>开发商</strong>: 字节跳动</li>
+<li><strong>技术栈</strong>: TypeScript, ES6+, Webpack</li>
+<li><strong>开源协议</strong>: MIT</li>
+<li><strong>代码仓库</strong>: <a href="https://github.com/bytedance/garfish" target="_blank" rel="noopener noreffer ">https://github.com/bytedance/garfish</a></li>
+</ul>
+<h3 id="架构概览">架构概览</h3>
+<p>Garfish 是一个功能强大的微前端框架，通过模块化架构提供全面的隔离机制：</p>
+<pre tabindex="0"><code>garfish/
+├── packages/
+│   ├── core/              # 核心框架逻辑
+│   ├── browser-vm/        # JavaScript VM 沙箱隔离
+│   ├── browser-snapshot/  # JavaScript 快照隔离
+│   ├── css-scope/         # CSS 作用域隔离
+│   ├── loader/            # 资源加载
+│   ├── router/            # 路由管理
+│   └── bridge-*/          # 框架桥接 (React, Vue)
+</code></pre><h3 id="整体结构">整体结构</h3>
+<pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">@startuml
+!theme plain
+skinparam backgroundColor #FEFEFE
+
+title Garfish 微前端隔离机制分析报告结构
+
+package &#34;框架信息&#34; as info {
+  [框架名称: Garfish]
+  [版本: 1.19.4]
+  [开发商: 字节跳动]
+  [技术栈]
+  [目录结构]
+}
+
+package &#34;JavaScript 隔离&#34; as js {
+  [VM 沙箱隔离\n- 基于代理的全局隔离\n- 代码执行隔离\n- 模块系统] as vm
+  [快照隔离\n- 全局状态快照\n- 变更跟踪\n- 状态恢复] as snapshot
+  [核心文件分析\n- sandbox.ts\n- proxyInterceptor/global.ts\n- modules/] as jsfiles
+}
+
+package &#34;CSS 隔离&#34; as css {
+  [CSS 作用域引擎\n- 基于 AST 的作用域\n- 选择器前缀\n- 动画作用域] as scope
+  [动态样式处理\n- 运行时 CSS 转换\n- AST 缓存\n- 性能优化] as dynamic
+  [核心文件分析\n- cssParser.ts\n- cssStringify.ts\n- pluginify.ts] as cssfiles
+}
+
+package &#34;隔离架构&#34; as arch {
+  [双重隔离策略\n- VM vs 快照\n- 权衡分析] as dual
+  [模块系统设计\n- 模块化隔离\n- 环境模块] as modules
+  [性能考量\n- 缓存策略\n- 优化技术] as perf
+}
+
+package &#34;分析与洞察&#34; as analysis {
+  [权衡与设计决策\n- 浏览器兼容性\n- 性能 vs 隔离] as tradeoffs
+  [最佳实践\n- 框架使用者\n- 框架开发者] as practices
+  [总结与评估\n- 整体策略\n- 生产就绪性] as summary
+}
+
+info --&gt; js
+info --&gt; css
+js --&gt; arch
+css --&gt; arch
+arch --&gt; analysis
+
+vm --&gt; jsfiles
+snapshot --&gt; jsfiles
+scope --&gt; cssfiles
+dynamic --&gt; cssfiles
+
+@enduml
+</code></pre><h2 id="javascript-隔离实现">JavaScript 隔离实现</h2>
+<p>Garfish 实现了<strong>双重 JavaScript 隔离策略</strong>，确保强健的微前端隔离：</p>]]></description>
 </item>
 </channel>
 </rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CSS on ZHOUKAILIAN Personal Blog</title>
+    <link>http://localhost:1313/tags/css/</link>
+    <description>Recent content in CSS on ZHOUKAILIAN Personal Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 13 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/css/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Garfish 微前端框架隔离机制分析</title>
+      <link>http://localhost:1313/posts/garfish-isolation/</link>
+      <pubDate>Tue, 13 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/garfish-isolation/</guid>
+      <description>&lt;h1 id=&#34;garfish-微前端框架隔离机制分析&#34;&gt;Garfish 微前端框架隔离机制分析&lt;/h1&gt;&#xA;&lt;h2 id=&#34;框架信息&#34;&gt;框架信息&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;框架名称&lt;/strong&gt;: Garfish&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;版本&lt;/strong&gt;: 1.19.4&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;开发商&lt;/strong&gt;: 字节跳动&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;技术栈&lt;/strong&gt;: TypeScript, ES6+, Webpack&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;开源协议&lt;/strong&gt;: MIT&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;代码仓库&lt;/strong&gt;: &lt;a href=&#34;https://github.com/bytedance/garfish&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://github.com/bytedance/garfish&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;架构概览&#34;&gt;架构概览&lt;/h3&gt;&#xA;&lt;p&gt;Garfish 是一个功能强大的微前端框架，通过模块化架构提供全面的隔离机制：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;garfish/&#xA;├── packages/&#xA;│   ├── core/              # 核心框架逻辑&#xA;│   ├── browser-vm/        # JavaScript VM 沙箱隔离&#xA;│   ├── browser-snapshot/  # JavaScript 快照隔离&#xA;│   ├── css-scope/         # CSS 作用域隔离&#xA;│   ├── loader/            # 资源加载&#xA;│   ├── router/            # 路由管理&#xA;│   └── bridge-*/          # 框架桥接 (React, Vue)&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;整体结构&#34;&gt;整体结构&lt;/h3&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-plantuml&#34; data-lang=&#34;plantuml&#34;&gt;@startuml&#xA;!theme plain&#xA;skinparam backgroundColor #FEFEFE&#xA;&#xA;title Garfish 微前端隔离机制分析报告结构&#xA;&#xA;package &amp;#34;框架信息&amp;#34; as info {&#xA;  [框架名称: Garfish]&#xA;  [版本: 1.19.4]&#xA;  [开发商: 字节跳动]&#xA;  [技术栈]&#xA;  [目录结构]&#xA;}&#xA;&#xA;package &amp;#34;JavaScript 隔离&amp;#34; as js {&#xA;  [VM 沙箱隔离\n- 基于代理的全局隔离\n- 代码执行隔离\n- 模块系统] as vm&#xA;  [快照隔离\n- 全局状态快照\n- 变更跟踪\n- 状态恢复] as snapshot&#xA;  [核心文件分析\n- sandbox.ts\n- proxyInterceptor/global.ts\n- modules/] as jsfiles&#xA;}&#xA;&#xA;package &amp;#34;CSS 隔离&amp;#34; as css {&#xA;  [CSS 作用域引擎\n- 基于 AST 的作用域\n- 选择器前缀\n- 动画作用域] as scope&#xA;  [动态样式处理\n- 运行时 CSS 转换\n- AST 缓存\n- 性能优化] as dynamic&#xA;  [核心文件分析\n- cssParser.ts\n- cssStringify.ts\n- pluginify.ts] as cssfiles&#xA;}&#xA;&#xA;package &amp;#34;隔离架构&amp;#34; as arch {&#xA;  [双重隔离策略\n- VM vs 快照\n- 权衡分析] as dual&#xA;  [模块系统设计\n- 模块化隔离\n- 环境模块] as modules&#xA;  [性能考量\n- 缓存策略\n- 优化技术] as perf&#xA;}&#xA;&#xA;package &amp;#34;分析与洞察&amp;#34; as analysis {&#xA;  [权衡与设计决策\n- 浏览器兼容性\n- 性能 vs 隔离] as tradeoffs&#xA;  [最佳实践\n- 框架使用者\n- 框架开发者] as practices&#xA;  [总结与评估\n- 整体策略\n- 生产就绪性] as summary&#xA;}&#xA;&#xA;info --&amp;gt; js&#xA;info --&amp;gt; css&#xA;js --&amp;gt; arch&#xA;css --&amp;gt; arch&#xA;arch --&amp;gt; analysis&#xA;&#xA;vm --&amp;gt; jsfiles&#xA;snapshot --&amp;gt; jsfiles&#xA;scope --&amp;gt; cssfiles&#xA;dynamic --&amp;gt; cssfiles&#xA;&#xA;@enduml&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;javascript-隔离实现&#34;&gt;JavaScript 隔离实现&lt;/h2&gt;&#xA;&lt;p&gt;Garfish 实现了&lt;strong&gt;双重 JavaScript 隔离策略&lt;/strong&gt;，确保强健的微前端隔离：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

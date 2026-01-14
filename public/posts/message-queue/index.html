@@ -51,7 +51,7 @@
             <a href="/" title="ZHOUKAILIAN Personal Blog">ZHOUKAILIAN Personal Blog</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/life/"> Life </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/categories/frontend/"> 前端 </a><a class="menu-item" href="/categories/backend/"> 后端 </a><a class="menu-item" href="/categories/ai/"> AI </a><a class="menu-item" href="/categories/life/"> 生活 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
                             <i class="fas fa-search fa-fw" aria-hidden="true"></i>
@@ -93,7 +93,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/life/" title="">Life</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                </div><a class="menu-item" href="/categories/frontend/" title="">前端</a><a class="menu-item" href="/categories/backend/" title="">后端</a><a class="menu-item" href="/categories/ai/" title="">AI</a><a class="menu-item" href="/categories/life/" title="">生活</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
             </a></div>
     </div>
@@ -107,7 +107,7 @@
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">消息队列（MQ）完全指南</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>ZHOUKAILIAN</a></span></div>
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>ZHOUKAILIAN</a></span>&nbsp;<span class="post-category">included in <a href="/categories/backend/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Backend</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-12-07">2025-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;277 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
@@ -165,7 +165,8 @@
 <p><strong>举例</strong>：快递员发快递，一定要找到客户面对面送货效率会很低。引用快递驿站后，快递员只需要把快递放到驿站，就可以继续发其他快递去了，客户自行安排时间去驿站取快递。</p>
 <p><strong>作用</strong>：<strong>异步能提高系统的响应速度、吞吐量</strong>。</p>
 <blockquote>
-<p>也可以使用 Future 实现（Java 中）</p></blockquote>
+<p>也可以使用 Future 实现（Java 中）</p>
+</blockquote>
 <h3 id="22-解耦">2.2 解耦</h3>
 <p><strong>举例</strong>：快递员发快递，一定要找到客户面对面送货就一定要等到双方都有空才能完成投递操作，既依赖于用户是否有时间，也依赖于快递员是否有时间。引用快递驿站后，快递员只需要把快递放到驿站，就可以继续发其他快递去了，客户自行安排时间去驿站取快递。</p>
 <p><strong>作用</strong>：</p>
@@ -353,7 +354,8 @@
 <li><strong>刷盘机制</strong>：Kafka 可以配置为定期将数据从页缓存刷到磁盘，以确保数据的持久性。这通常通过参数 <code>log.flush.interval.messages</code> 和 <code>log.flush.interval.ms</code> 进行控制。</li>
 </ul>
 <blockquote>
-<p><strong>注意</strong>：Kafka 的刷盘机制是<strong>异步刷盘</strong></p></blockquote>
+<p><strong>注意</strong>：Kafka 的刷盘机制是<strong>异步刷盘</strong></p>
+</blockquote>
 <h2 id="6-rabbitmq-详解">6. RabbitMQ 详解</h2>
 <h3 id="61-消息的顺序性">6.1 消息的顺序性</h3>
 <p>RabbitMQ 通过队列机制保证消息的顺序性：</p>
@@ -364,7 +366,8 @@
 </ul>
 <blockquote>
 <p><strong>注意</strong>：RabbitMQ 如果一个队列有多个消费者并发消费，无法保证全局顺序，只能保证单消费者的消费顺序。</p>
-<p>RabbitMQ 是通过 FIFO 来保证单消费者的顺序性，缺点是无法跳过最开始的值读后续的值，比如队列里原先有 A1 和 A2，必须先读 A1 再读 A2</p></blockquote>
+<p>RabbitMQ 是通过 FIFO 来保证单消费者的顺序性，缺点是无法跳过最开始的值读后续的值，比如队列里原先有 A1 和 A2，必须先读 A1 再读 A2</p>
+</blockquote>
 <h3 id="62-消息的可靠性">6.2 消息的可靠性</h3>
 <h4 id="1-持久化机制">1. 持久化机制</h4>
 <ul>
@@ -373,7 +376,8 @@
 <li><strong>刷盘机制</strong>：RabbitMQ 会将持久化消息写入磁盘文件，确保即使 Broker 宕机，重启后仍能恢复。</li>
 </ul>
 <blockquote>
-<p><strong>注意</strong>：RabbitMQ 的刷盘机制是<strong>同步刷盘</strong>，只有写入磁盘后才会返回 ACK</p></blockquote>
+<p><strong>注意</strong>：RabbitMQ 的刷盘机制是<strong>同步刷盘</strong>，只有写入磁盘后才会返回 ACK</p>
+</blockquote>
 <h4 id="2-镜像队列--仲裁队列机制">2. 镜像队列 / 仲裁队列机制</h4>
 <ul>
 <li><strong>镜像队列</strong>：队列内容在多个节点之间实时同步，主节点宕机时，备节点自动接管，保证消息不丢失。</li>

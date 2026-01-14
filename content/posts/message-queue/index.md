@@ -9,6 +9,7 @@ description: "深入理解消息队列的核心概念、作用、选型对比以
 images: []
 
 tags: ["消息队列", "分布式系统", "后端"]
+categories: ["backend"]
 
 lightgallery: true
 ---

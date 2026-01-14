@@ -24,7 +24,7 @@
 <meta name="application-name" content="ZHOUKAILIAN Personal Blog">
 <meta name="apple-mobile-web-app-title" content="ZHOUKAILIAN Personal Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/qiankun/" /><link rel="next" href="http://localhost:1313/posts/message-queue/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/qiankun/" /><link rel="prev" href="http://localhost:1313/posts/garfish-isolation/" /><link rel="next" href="http://localhost:1313/posts/message-queue/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -52,7 +52,7 @@
             <a href="/" title="ZHOUKAILIAN Personal Blog">ZHOUKAILIAN Personal Blog</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/life/"> Life </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/categories/frontend/"> 前端 </a><a class="menu-item" href="/categories/backend/"> 后端 </a><a class="menu-item" href="/categories/ai/"> AI </a><a class="menu-item" href="/categories/life/"> 生活 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
                             <i class="fas fa-search fa-fw" aria-hidden="true"></i>
@@ -94,7 +94,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/life/" title="">Life</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                </div><a class="menu-item" href="/categories/frontend/" title="">前端</a><a class="menu-item" href="/categories/backend/" title="">后端</a><a class="menu-item" href="/categories/ai/" title="">AI</a><a class="menu-item" href="/categories/life/" title="">生活</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
             </a></div>
     </div>
@@ -108,7 +108,7 @@
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">qiankun</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>ZHOUKAILIAN</a></span></div>
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>ZHOUKAILIAN</a></span>&nbsp;<span class="post-category">included in <a href="/categories/frontend/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Frontend</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-07-06">2025-07-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3398 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;16 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
@@ -353,7 +353,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 验证：
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">proxySandBox1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ProxySandBox</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">proxySandBox2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ProxySandBox</span><span class="p">();</span>
@@ -395,17 +395,17 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;window:window.city:&#34;</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">city</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 输出：
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// active:proxySandBox1:window.city: Beijing
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// active:proxySandBox2:window.city: Shanghai
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// window:window.city: undefined
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// inactive:proxySandBox1:window.city: Beijing
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// inactive:proxySandBox2:window.city: Shanghai
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// window:window.city: undefined
 </span></span></span></code></pre></div><p>从上述代码可以看出，ProxySandbox 并不包含状态恢复的逻辑，也无需记录属性值的变化，因为所有的更改都发生在沙箱内部，与 window 无关，window 上的属性始终不受影响。其缺点是无法阻止自执行函数对 window 的直接修改。此外，由于 Proxy 是 ES6 的新特性，不兼容低版本浏览器，因此 SnapshotSandbox 将会长期存在。</p>
 <h2 id="qiankun-沙箱源码分析">qiankun 沙箱源码分析</h2>
@@ -469,11 +469,11 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">iter</span><span class="p">(</span><span class="nx">obj</span><span class="o">:</span> <span class="k">typeof</span> <span class="nb">window</span> <span class="o">|</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">any</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">callbackFn</span><span class="o">:</span> <span class="p">(</span><span class="nx">prop</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// eslint-disable-next-line guard-for-in, no-restricted-syntax
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// patch for clearInterval for compatible reason, see #1490
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="o">||</span> <span class="nx">prop</span> <span class="o">===</span> <span class="s1">&#39;clearInterval&#39;</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">callbackFn</span><span class="p">(</span><span class="nx">prop</span><span class="p">);</span>
@@ -519,7 +519,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="nx">active</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 记录当前快照
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span> <span class="o">=</span> <span class="p">{}</span> <span class="nx">as</span> <span class="nx">Window</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">iter</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -529,7 +529,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 恢复之前的变更
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">modifyPropsMap</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">p</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">modifyPropsMap</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
@@ -537,7 +537,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 删除之前删除的属性
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">deletePropsSet</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">p</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">delete</span> <span class="nb">window</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
@@ -559,7 +559,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">!==</span> <span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span><span class="p">[</span><span class="nx">prop</span><span class="p">])</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 记录变更，恢复环境
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">modifyPropsMap</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
@@ -573,7 +573,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 记录被删除的属性，恢复环境
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">deletePropsSet</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">prop</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">windowSnapshot</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
@@ -688,11 +688,11 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">setWindowProp</span><span class="p">(</span><span class="nx">prop</span><span class="o">:</span> <span class="nx">PropertyKey</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">any</span><span class="p">,</span> <span class="nx">toDelete</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">toDelete</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="c1">// eslint-disable-next-line no-param-reassign
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">delete</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">globalContext</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">)[</span><span class="nx">prop</span><span class="p">];</span>
+</span></span></span><span class="line"><span class="cl">      <span class="k">delete</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">globalContext</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">)[</span><span class="nx">prop</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">isPropConfigurable</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">globalContext</span><span class="p">,</span> <span class="nx">prop</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">prop</span> <span class="o">!==</span> <span class="s1">&#39;symbol&#39;</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">globalContext</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="p">{</span> <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
 </span></span><span class="line"><span class="cl">      <span class="c1">// eslint-disable-next-line no-param-reassign
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">globalContext</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">)[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">globalContext</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">)[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -713,8 +713,8 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1">// renderSandboxSnapshot = snapshot(currentUpdatedPropsValueMapForSnapshot);
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// restore global props to initial snapshot
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">modifiedPropsOriginalValueMapInSandbox</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">v</span><span class="p">,</span> <span class="nx">p</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">setWindowProp</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">v</span><span class="p">));</span>
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// restore global props to initial snapshot
+</span></span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">modifiedPropsOriginalValueMapInSandbox</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">v</span><span class="p">,</span> <span class="nx">p</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">setWindowProp</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">v</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">addedPropsMapInSandbox</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span> <span class="nx">p</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">setWindowProp</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="kc">true</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">sandboxRunning</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
@@ -735,14 +735,14 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">          <span class="nx">addedPropsMapInSandbox</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">modifiedPropsOriginalValueMapInSandbox</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// 如果当前 window 对象存在该属性，且 record map 中未记录过，则记录该属性初始值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="nx">modifiedPropsOriginalValueMapInSandbox</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">originalValue</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">          <span class="nx">modifiedPropsOriginalValueMapInSandbox</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">originalValue</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="nx">currentUpdatedPropsValueMap</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">sync2Window</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// 必须重新设置 window 对象保证下次 get 时能拿到已更新的数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="p">(</span><span class="nx">rawWindow</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">)[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nx">rawWindow</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">)[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">latestSetProp</span> <span class="o">=</span> <span class="nx">p</span><span class="p">;</span>
@@ -755,7 +755,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">      <span class="c1">// 在 strict-mode 下，Proxy 的 handler.set 返回 false 会抛出 TypeError，在沙箱卸载的情况下应该忽略错误
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">};</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">fakeWindow</span><span class="p">,</span> <span class="p">{</span>
@@ -766,9 +766,9 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">      <span class="nx">get</span><span class="p">(</span><span class="nx">_</span><span class="o">:</span> <span class="nx">Window</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">PropertyKey</span><span class="p">)</span><span class="o">:</span> <span class="nx">any</span> <span class="p">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// avoid who using window.window or window.self to escape the sandbox environment to touch the really window
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// or use window.top to check if an iframe context
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// see https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js#L13
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;top&#39;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;parent&#39;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;window&#39;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;self&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">        <span class="c1">// or use window.top to check if an iframe context
+</span></span></span><span class="line"><span class="cl">        <span class="c1">// see https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js#L13
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;top&#39;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;parent&#39;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;window&#39;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;self&#39;</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">proxy</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -777,15 +777,15 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">      <span class="c1">// trap in operator
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="c1">// see https://github.com/styled-components/styled-components/blob/master/packages/styled-components/src/constants.js#L12
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">has</span><span class="p">(</span><span class="nx">_</span><span class="o">:</span> <span class="nx">Window</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="nx">symbol</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">      <span class="c1">// see https://github.com/styled-components/styled-components/blob/master/packages/styled-components/src/constants.js#L12
+</span></span></span><span class="line"><span class="cl">      <span class="nx">has</span><span class="p">(</span><span class="nx">_</span><span class="o">:</span> <span class="nx">Window</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="nx">symbol</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">rawWindow</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">      <span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">_</span><span class="o">:</span> <span class="nx">Window</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">PropertyKey</span><span class="p">)</span><span class="o">:</span> <span class="nx">PropertyDescriptor</span> <span class="o">|</span> <span class="kc">undefined</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">rawWindow</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// A property cannot be reported as non-configurable, if it does not exists as an own property of the target object
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">descriptor</span><span class="p">.</span><span class="nx">configurable</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">descriptor</span><span class="p">.</span><span class="nx">configurable</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="nx">descriptor</span><span class="p">.</span><span class="nx">configurable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">descriptor</span><span class="p">;</span>
@@ -862,28 +862,28 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// zone.js will overwrite Object.defineProperty
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">rawObjectDefineProperty</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">rawObjectDefineProperty</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">variableWhiteListInDev</span> <span class="o">=</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="s1">&#39;test&#39;</span> <span class="o">||</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="s1">&#39;development&#39;</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">__QIANKUN_DEVELOPMENT__</span>
 </span></span><span class="line"><span class="cl">    <span class="o">?</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// for react hot reload
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// see https://github.com/facebook/create-react-app/blob/66bf7dfc43350249e2f09d138a20840dae8a0a4a/packages/react-error-overlay/src/index.js#L180
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="s1">&#39;__REACT_ERROR_OVERLAY_GLOBAL_HOOK__&#39;</span><span class="p">,</span>
+</span></span></span><span class="line"><span class="cl">        <span class="c1">// see https://github.com/facebook/create-react-app/blob/66bf7dfc43350249e2f09d138a20840dae8a0a4a/packages/react-error-overlay/src/index.js#L180
+</span></span></span><span class="line"><span class="cl">        <span class="s1">&#39;__REACT_ERROR_OVERLAY_GLOBAL_HOOK__&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// for react development event issue, see https://github.com/umijs/qiankun/issues/2375
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="s1">&#39;event&#39;</span><span class="p">,</span>
+</span></span></span><span class="line"><span class="cl">        <span class="s1">&#39;event&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">      <span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="o">:</span> <span class="p">[];</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// who could escape the sandbox
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">globalVariableWhiteList</span><span class="o">:</span> <span class="nx">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">globalVariableWhiteList</span><span class="o">:</span> <span class="nx">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">// FIXME System.js used a indirect call with eval, which would make it scope escape to global
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// To make System.js works well, we write it back to global window temporary
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// see https://github.com/systemjs/systemjs/blob/457f5b7e8af6bd120a279540477552a07d5de086/src/evaluate.js#L106
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="s1">&#39;System&#39;</span><span class="p">,</span>
+</span></span></span><span class="line"><span class="cl">  <span class="c1">// To make System.js works well, we write it back to global window temporary
+</span></span></span><span class="line"><span class="cl">  <span class="c1">// see https://github.com/systemjs/systemjs/blob/457f5b7e8af6bd120a279540477552a07d5de086/src/evaluate.js#L106
+</span></span></span><span class="line"><span class="cl">  <span class="s1">&#39;System&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1">// see https://github.com/systemjs/systemjs/blob/457f5b7e8af6bd120a279540477552a07d5de086/src/instantiate.js#L357
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="s1">&#39;__cjsWrapper&#39;</span><span class="p">,</span>
+</span></span></span><span class="line"><span class="cl">  <span class="s1">&#39;__cjsWrapper&#39;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="p">...</span><span class="nx">variableWhiteListInDev</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">];</span>
 </span></span><span class="line"><span class="cl">
@@ -893,7 +893,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">mockGlobalThis</span> <span class="o">=</span> <span class="s1">&#39;mockGlobalThis&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// these globals should be recorded while accessing every time
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">accessingSpiedGlobals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;document&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="s1">&#39;eval&#39;</span><span class="p">];</span>
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">accessingSpiedGlobals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;document&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="s1">&#39;eval&#39;</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">overwrittenGlobals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;window&#39;</span><span class="p">,</span> <span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="s1">&#39;globalThis&#39;</span><span class="p">,</span> <span class="s1">&#39;hasOwnProperty&#39;</span><span class="p">].</span><span class="nx">concat</span><span class="p">(</span><span class="nx">inTest</span> <span class="o">?</span> <span class="p">[</span><span class="nx">mockGlobalThis</span><span class="p">]</span> <span class="o">:</span> <span class="p">[]);</span>
 </span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">cachedGlobals</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="k">new</span> <span class="nx">Set</span><span class="p">(</span>
@@ -917,8 +917,8 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">createFakeWindow</span><span class="p">(</span><span class="nx">globalContext</span><span class="o">:</span> <span class="nx">Window</span><span class="p">,</span> <span class="nx">speedy</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">// map always has the fastest performance in has checked scenario
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// see https://jsperf.com/array-indexof-vs-set-has/23
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">const</span> <span class="nx">propertiesWithGetter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">PropertyKey</span><span class="p">,</span> <span class="kr">boolean</span><span class="o">&gt;</span><span class="p">();</span>
+</span></span></span><span class="line"><span class="cl">  <span class="c1">// see https://jsperf.com/array-indexof-vs-set-has/23
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">propertiesWithGetter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">PropertyKey</span><span class="p">,</span> <span class="kr">boolean</span><span class="o">&gt;</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">fakeWindow</span> <span class="o">=</span> <span class="p">{}</span> <span class="nx">as</span> <span class="nx">FakeWindow</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="cm">/*
@@ -935,7 +935,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">globalContext</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// 访问器属性
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kr">const</span> <span class="nx">hasGetter</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">hasGetter</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="cm">/*
 </span></span></span><span class="line"><span class="cl"><span class="cm">         make top/self/window property configurable and writable, otherwise it will cause TypeError while get trap return.
@@ -948,7 +948,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">          <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;self&#39;</span> <span class="o">||</span>
 </span></span><span class="line"><span class="cl">          <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;window&#39;</span> <span class="o">||</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// window.document is overwriting in speedy mode
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;document&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">speedy</span><span class="p">)</span> <span class="o">||</span>
+</span></span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;document&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">speedy</span><span class="p">)</span> <span class="o">||</span>
 </span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nx">inTest</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="nx">mockTop</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="nx">mockSafariTop</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">        <span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="nx">descriptor</span><span class="p">.</span><span class="nx">configurable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
@@ -966,8 +966,8 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">hasGetter</span><span class="p">)</span> <span class="nx">propertiesWithGetter</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1">// freeze the descriptor to avoid being modified by zone.js
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// see https://github.com/angular/zone.js/blob/a5fe09b0fac27ac5df1fa746042f96f05ccb6a00/lib/browser/define-property.ts#L71
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">rawObjectDefineProperty</span><span class="p">(</span><span class="nx">fakeWindow</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">freeze</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">));</span>
+</span></span></span><span class="line"><span class="cl">        <span class="c1">// see https://github.com/angular/zone.js/blob/a5fe09b0fac27ac5df1fa746042f96f05ccb6a00/lib/browser/define-property.ts#L71
+</span></span></span><span class="line"><span class="cl">        <span class="nx">rawObjectDefineProperty</span><span class="p">(</span><span class="nx">fakeWindow</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">freeze</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">});</span>
 </span></span><span class="line"><span class="cl">
@@ -994,7 +994,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nx">active</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// 应该是一个运行的沙箱有一个proxySandbox，这个是记录当前运行了多少个沙箱
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">sandboxRunning</span><span class="p">)</span> <span class="nx">activeSandboxCount</span><span class="o">++</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">sandboxRunning</span><span class="p">)</span> <span class="nx">activeSandboxCount</span><span class="o">++</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">sandboxRunning</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -1005,15 +1005,15 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">      <span class="p">]);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// 如果是在测试环境下，或是当前没有沙箱在运行的情况下，将属性还原
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nx">inTest</span> <span class="o">||</span> <span class="o">--</span><span class="nx">activeSandboxCount</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">inTest</span> <span class="o">||</span> <span class="o">--</span><span class="nx">activeSandboxCount</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="c1">// reset the global value to the prev value
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">globalWhitelistPrevDescriptor</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">p</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">      <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">globalWhitelistPrevDescriptor</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">p</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">globalWhitelistPrevDescriptor</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">globalContext</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">descriptor</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// @ts-ignore
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="k">delete</span> <span class="k">this</span><span class="p">.</span><span class="nx">globalContext</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
+</span></span></span><span class="line"><span class="cl">          <span class="k">delete</span> <span class="k">this</span><span class="p">.</span><span class="nx">globalContext</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">      <span class="p">});</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
@@ -1026,7 +1026,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1">// the descriptor of global variables in whitelist before it been modified
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">globalWhitelistPrevDescriptor</span><span class="o">:</span> <span class="p">{</span> <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">globalVariableWhiteList</span><span class="p">)[</span><span class="nx">number</span><span class="p">]]</span><span class="o">:</span> <span class="nx">PropertyDescriptor</span> <span class="o">|</span> <span class="kc">undefined</span> <span class="p">}</span> <span class="o">=</span>
+</span></span></span><span class="line"><span class="cl">  <span class="nx">globalWhitelistPrevDescriptor</span><span class="o">:</span> <span class="p">{</span> <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">globalVariableWhiteList</span><span class="p">)[</span><span class="nx">number</span><span class="p">]]</span><span class="o">:</span> <span class="nx">PropertyDescriptor</span> <span class="o">|</span> <span class="kc">undefined</span> <span class="p">}</span> <span class="o">=</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{};</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">globalContext</span><span class="o">:</span> <span class="k">typeof</span> <span class="nb">window</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -1046,22 +1046,22 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">          <span class="k">this</span><span class="p">.</span><span class="nx">registerRunningApp</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">          <span class="c1">// sync the property to globalContext
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="c1">// 修改全局window的一些属性
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">globalVariableWhiteList</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">          <span class="c1">// 修改全局window的一些属性
+</span></span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">globalVariableWhiteList</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">globalWhitelistPrevDescriptor</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">globalContext</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="c1">// @ts-ignore
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">globalContext</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nx">globalContext</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="c1">// We must keep its description while the property existed in globalContext before
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">target</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">globalContext</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">target</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">globalContext</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">              <span class="kr">const</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">globalContext</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">              <span class="kr">const</span> <span class="p">{</span> <span class="nx">writable</span><span class="p">,</span> <span class="nx">configurable</span><span class="p">,</span> <span class="nx">enumerable</span><span class="p">,</span> <span class="nx">set</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">descriptor</span><span class="o">!</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">              <span class="c1">// only writable property can be overwritten
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>              <span class="c1">// here we ignored accessor descriptor of globalContext as it makes no sense to trigger its logic(which might make sandbox escaping instead)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>              <span class="c1">// we force to set value by data descriptor
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>              <span class="k">if</span> <span class="p">(</span><span class="nx">writable</span> <span class="o">||</span> <span class="nx">set</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">              <span class="c1">// here we ignored accessor descriptor of globalContext as it makes no sense to trigger its logic(which might make sandbox escaping instead)
+</span></span></span><span class="line"><span class="cl">              <span class="c1">// we force to set value by data descriptor
+</span></span></span><span class="line"><span class="cl">              <span class="k">if</span> <span class="p">(</span><span class="nx">writable</span> <span class="o">||</span> <span class="nx">set</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">                <span class="c1">// 属性改成数据属性，数据属性的性能相对访问器来说好点
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="p">{</span> <span class="nx">configurable</span><span class="p">,</span> <span class="nx">enumerable</span><span class="p">,</span> <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">value</span> <span class="p">});</span>
+</span></span></span><span class="line"><span class="cl">                <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="p">{</span> <span class="nx">configurable</span><span class="p">,</span> <span class="nx">enumerable</span><span class="p">,</span> <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">value</span> <span class="p">});</span>
 </span></span><span class="line"><span class="cl">              <span class="p">}</span>
 </span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">              <span class="nx">target</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
@@ -1080,7 +1080,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1">// 在 strict-mode 下，Proxy 的 handler.set 返回 false 会抛出 TypeError，在沙箱卸载的情况下应该忽略错误
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">      <span class="nx">get</span><span class="o">:</span> <span class="p">(</span><span class="nx">target</span><span class="o">:</span> <span class="nx">FakeWindow</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">PropertyKey</span><span class="p">)</span><span class="o">:</span> <span class="nx">any</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1088,26 +1088,26 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="nx">Symbol</span><span class="p">.</span><span class="nx">unscopables</span><span class="p">)</span> <span class="k">return</span> <span class="nx">unscopables</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// avoid who using window.window or window.self to escape the sandbox environment to touch the real window
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// see https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js#L13
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;window&#39;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;self&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">        <span class="c1">// see https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js#L13
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;window&#39;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;self&#39;</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">proxy</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1">// hijack globalWindow accessing with globalThis keyword
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;globalThis&#39;</span> <span class="o">||</span> <span class="p">(</span><span class="nx">inTest</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">===</span> <span class="nx">mockGlobalThis</span><span class="p">))</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;globalThis&#39;</span> <span class="o">||</span> <span class="p">(</span><span class="nx">inTest</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">===</span> <span class="nx">mockGlobalThis</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">proxy</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;top&#39;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;parent&#39;</span> <span class="o">||</span> <span class="p">(</span><span class="nx">inTest</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="nx">mockTop</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="nx">mockSafariTop</span><span class="p">)))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// if your master app in an iframe context, allow these props escape the sandbox
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="k">if</span> <span class="p">(</span><span class="nx">globalContext</span> <span class="o">===</span> <span class="nx">globalContext</span><span class="p">.</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="p">(</span><span class="nx">globalContext</span> <span class="o">===</span> <span class="nx">globalContext</span><span class="p">.</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nx">proxy</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">          <span class="p">}</span>
 </span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="p">(</span><span class="nx">globalContext</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">)[</span><span class="nx">p</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1">// proxy.hasOwnProperty would invoke getter firstly, then its value represented as globalContext.hasOwnProperty
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;hasOwnProperty&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;hasOwnProperty&#39;</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">hasOwnProperty</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -1121,19 +1121,19 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">globalVariableWhiteList</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// @ts-ignore
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="k">return</span> <span class="nx">globalContext</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
+</span></span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">globalContext</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">actualTarget</span> <span class="o">=</span> <span class="nx">propertiesWithGetter</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">?</span> <span class="nx">globalContext</span> <span class="o">:</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">target</span> <span class="o">?</span> <span class="nx">target</span> <span class="o">:</span> <span class="nx">globalContext</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">actualTarget</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1">// frozen value should return directly, see https://github.com/umijs/qiankun/issues/2015
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">isPropertyFrozen</span><span class="p">(</span><span class="nx">actualTarget</span><span class="p">,</span> <span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">isPropertyFrozen</span><span class="p">(</span><span class="nx">actualTarget</span><span class="p">,</span> <span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1">// non-native property return directly to avoid rebind
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isNativeGlobalProp</span><span class="p">(</span><span class="nx">p</span> <span class="nx">as</span> <span class="nx">string</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">useNativeWindowForBindingsProps</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isNativeGlobalProp</span><span class="p">(</span><span class="nx">p</span> <span class="nx">as</span> <span class="nx">string</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">useNativeWindowForBindingsProps</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -1149,10 +1149,10 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">      <span class="c1">// trap in operator
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="c1">// see https://github.com/styled-components/styled-components/blob/master/packages/styled-components/src/constants.js#L12
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">has</span><span class="p">(</span><span class="nx">target</span><span class="o">:</span> <span class="nx">FakeWindow</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="nx">symbol</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">      <span class="c1">// see https://github.com/styled-components/styled-components/blob/master/packages/styled-components/src/constants.js#L12
+</span></span></span><span class="line"><span class="cl">      <span class="nx">has</span><span class="p">(</span><span class="nx">target</span><span class="o">:</span> <span class="nx">FakeWindow</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="nx">symbol</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// property in cachedGlobalObjects must return true to avoid escape from get trap
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">cachedGlobalObjects</span> <span class="o">||</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">target</span> <span class="o">||</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">globalContext</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">cachedGlobalObjects</span> <span class="o">||</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">target</span> <span class="o">||</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">globalContext</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">      <span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">target</span><span class="o">:</span> <span class="nx">FakeWindow</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="nx">symbol</span><span class="p">)</span><span class="o">:</span> <span class="nx">PropertyDescriptor</span> <span class="o">|</span> <span class="kc">undefined</span> <span class="p">{</span>
@@ -1171,7 +1171,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">          <span class="kr">const</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">globalContext</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">          <span class="nx">descriptorTargetMap</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="s1">&#39;globalContext&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// A property cannot be reported as non-configurable, if it does not exist as an own property of the target object
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">descriptor</span><span class="p">.</span><span class="nx">configurable</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">descriptor</span><span class="p">.</span><span class="nx">configurable</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">descriptor</span><span class="p">.</span><span class="nx">configurable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">          <span class="p">}</span>
 </span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">descriptor</span><span class="p">;</span>
@@ -1181,7 +1181,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">      <span class="c1">// trap to support iterator with sandbox
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">ownKeys</span><span class="p">(</span><span class="nx">target</span><span class="o">:</span> <span class="nx">FakeWindow</span><span class="p">)</span><span class="o">:</span> <span class="nx">ArrayLike</span><span class="o">&lt;</span><span class="nx">string</span> <span class="o">|</span> <span class="nx">symbol</span><span class="o">&gt;</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">      <span class="nx">ownKeys</span><span class="p">(</span><span class="nx">target</span><span class="o">:</span> <span class="nx">FakeWindow</span><span class="p">)</span><span class="o">:</span> <span class="nx">ArrayLike</span><span class="o">&lt;</span><span class="nx">string</span> <span class="o">|</span> <span class="nx">symbol</span><span class="o">&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">uniq</span><span class="p">(</span><span class="nx">Reflect</span><span class="p">.</span><span class="nx">ownKeys</span><span class="p">(</span><span class="nx">globalContext</span><span class="p">).</span><span class="nx">concat</span><span class="p">(</span><span class="nx">Reflect</span><span class="p">.</span><span class="nx">ownKeys</span><span class="p">(</span><span class="nx">target</span><span class="p">)));</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">
@@ -1203,7 +1203,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">registerRunningApp</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">// @ts-ignore
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>          <span class="k">delete</span> <span class="nx">target</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
+</span></span></span><span class="line"><span class="cl">          <span class="k">delete</span> <span class="nx">target</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">          <span class="nx">updatedValueSet</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
@@ -1213,7 +1213,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">      <span class="c1">// makes sure `window instanceof Window` returns truthy in micro app
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">getPrototypeOf</span><span class="p">()</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">      <span class="nx">getPrototypeOf</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">Reflect</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">globalContext</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">    <span class="p">});</span>
@@ -1224,7 +1224,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nx">hasOwnProperty</span><span class="p">(</span><span class="k">this</span><span class="o">:</span> <span class="nx">any</span><span class="p">,</span> <span class="nx">key</span><span class="o">:</span> <span class="nx">PropertyKey</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="c1">// calling from hasOwnProperty.call(obj, key)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">if</span> <span class="p">(</span><span class="k">this</span> <span class="o">!==</span> <span class="nx">proxy</span> <span class="o">&amp;&amp;</span> <span class="k">this</span> <span class="o">!==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="k">this</span> <span class="o">===</span> <span class="s1">&#39;object&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="k">this</span> <span class="o">!==</span> <span class="nx">proxy</span> <span class="o">&amp;&amp;</span> <span class="k">this</span> <span class="o">!==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="k">this</span> <span class="o">===</span> <span class="s1">&#39;object&#39;</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">key</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -1239,9 +1239,9 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">        <span class="nx">setCurrentRunningApp</span><span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nb">window</span><span class="o">:</span> <span class="nx">proxy</span> <span class="p">});</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span><span class="line"><span class="cl">      <span class="c1">// FIXME if you have any other good ideas
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="c1">// remove the mark in next tick, thus we can identify whether it in micro app or not
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="c1">// this approach is just a workaround, it could not cover all complex cases, such as the micro app runs in the same task context with master in some case
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">nextTask</span><span class="p">(</span><span class="nx">clearCurrentRunningApp</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">      <span class="c1">// remove the mark in next tick, thus we can identify whether it in micro app or not
+</span></span></span><span class="line"><span class="cl">      <span class="c1">// this approach is just a workaround, it could not cover all complex cases, such as the micro app runs in the same task context with master in some case
+</span></span></span><span class="line"><span class="cl">      <span class="nx">nextTask</span><span class="p">(</span><span class="nx">clearCurrentRunningApp</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -1266,7 +1266,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">globalWindow</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">eval</span><span class="p">)(</span><span class="s2">&#34;window&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">globalWindow</span><span class="p">.</span><span class="nx">proxy</span> <span class="o">=</span> <span class="nx">proxy</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">// 在这里通过with来进行隔离
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="nx">strictGlobal</span> <span class="o">?</span> <span class="nx">scopedGlobalVariableDefinition</span> <span class="o">?</span> <span class="sb">`;(function(){with(this){</span><span class="si">${</span><span class="nx">scopedGlobalVariableDefinition</span><span class="si">}${</span><span class="nx">scriptText</span><span class="si">}</span><span class="sb">\n</span><span class="si">${</span><span class="nx">sourceUrl</span><span class="si">}</span><span class="sb">}}).bind(window.proxy)();`</span> <span class="o">:</span> <span class="sb">`;(function(window, self, globalThis){with(window){;</span><span class="si">${</span><span class="nx">scriptText</span><span class="si">}</span><span class="sb">\n</span><span class="si">${</span><span class="nx">sourceUrl</span><span class="si">}</span><span class="sb">}}).bind(window.proxy)(window.proxy, window.proxy, window.proxy);`</span> <span class="o">:</span> <span class="sb">`;(function(window, self, globalThis){;</span><span class="si">${</span><span class="nx">scriptText</span><span class="si">}</span><span class="sb">\n</span><span class="si">${</span><span class="nx">sourceUrl</span><span class="si">}</span><span class="sb">}).bind(window.proxy)(window.proxy, window.proxy, window.proxy);`</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">strictGlobal</span> <span class="o">?</span> <span class="nx">scopedGlobalVariableDefinition</span> <span class="o">?</span> <span class="sb">`;(function(){with(this){</span><span class="si">${</span><span class="nx">scopedGlobalVariableDefinition</span><span class="si">}${</span><span class="nx">scriptText</span><span class="si">}</span><span class="sb">\n</span><span class="si">${</span><span class="nx">sourceUrl</span><span class="si">}</span><span class="sb">}}).bind(window.proxy)();`</span> <span class="o">:</span> <span class="sb">`;(function(window, self, globalThis){with(window){;</span><span class="si">${</span><span class="nx">scriptText</span><span class="si">}</span><span class="sb">\n</span><span class="si">${</span><span class="nx">sourceUrl</span><span class="si">}</span><span class="sb">}}).bind(window.proxy)(window.proxy, window.proxy, window.proxy);`</span> <span class="o">:</span> <span class="sb">`;(function(window, self, globalThis){;</span><span class="si">${</span><span class="nx">scriptText</span><span class="si">}</span><span class="sb">\n</span><span class="si">${</span><span class="nx">sourceUrl</span><span class="si">}</span><span class="sb">}).bind(window.proxy)(window.proxy, window.proxy, window.proxy);`</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p><strong>关键点</strong>：</p>
 <ul>
@@ -1295,7 +1295,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">containerElement</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">containerElement</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">appContent</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">// appContent always wrapped with a singular div
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">const</span> <span class="nx">appElement</span> <span class="o">=</span> <span class="nx">containerElement</span><span class="p">.</span><span class="nx">firstChild</span> <span class="nx">as</span> <span class="nx">HTMLElement</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">appElement</span> <span class="o">=</span> <span class="nx">containerElement</span><span class="p">.</span><span class="nx">firstChild</span> <span class="nx">as</span> <span class="nx">HTMLElement</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">strictStyleIsolation</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">supportShadowDOM</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span>
@@ -1310,7 +1310,7 @@ legacySandBox.inactive();
 </span></span><span class="line"><span class="cl">        <span class="nx">shadow</span> <span class="o">=</span> <span class="nx">appElement</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span> <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;open&#39;</span> <span class="p">});</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">// createShadowRoot was proposed in initial spec, which has then been deprecated
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">shadow</span> <span class="o">=</span> <span class="p">(</span><span class="nx">appElement</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">).</span><span class="nx">createShadowRoot</span><span class="p">();</span>
+</span></span></span><span class="line"><span class="cl">        <span class="nx">shadow</span> <span class="o">=</span> <span class="p">(</span><span class="nx">appElement</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">).</span><span class="nx">createShadowRoot</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span><span class="line"><span class="cl">      <span class="nx">shadow</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">innerHTML</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
@@ -1356,7 +1356,7 @@ legacySandBox.inactive();
         </section>
     </div>
 
-    <div class="post-nav">
+    <div class="post-nav"><a href="/posts/garfish-isolation/" class="prev" rel="prev" title="Garfish 微前端框架隔离机制分析"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Garfish 微前端框架隔离机制分析</a>
             <a href="/posts/message-queue/" class="next" rel="next" title="消息队列（MQ）完全指南">消息队列（MQ）完全指南<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></div>

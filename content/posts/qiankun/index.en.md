@@ -13,7 +13,7 @@ images: []
 # src: "featured-image.png"
 
 tags: ["微前端", "web"]
-# categories: ["Markdown"]
+categories: ["frontend"]
 
 lightgallery: true
 ---
