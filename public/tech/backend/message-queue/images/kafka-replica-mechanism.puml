@@ -1,0 +1,22 @@
+@startuml kafka-replica-mechanism
+
+actor "生产者" as producer
+component "Leader副本" as leader
+component "Follower副本1" as follower1
+component "Follower副本2" as follower2
+actor "消费者" as consumer
+
+producer --> leader: 发送消息
+leader --> follower1: 复制
+leader --> follower2: 复制
+leader --> producer: ACK
+
+consumer --> leader: 读取
+
+note bottom of leader
+  Leader副本处理所有读写请求
+  Follower副本复制Leader的更新
+  高可用性：Leader宕机时自动选举新Leader
+end note
+
+@enduml
