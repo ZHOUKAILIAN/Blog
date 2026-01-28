@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>wujie 微前端框架隔离机制分析 - ZHOUKAILIAN Personal Blog</title><meta name="Description" content="深入分析 wujie 微前端框架的 JavaScript 和 CSS 隔离机制实现"><meta property="og:url" content="http://localhost:1313/tech/frontend/wujie-isolation/">
+  <meta property="og:site_name" content="ZHOUKAILIAN Personal Blog">
+  <meta property="og:title" content="wujie 微前端框架隔离机制分析">
+  <meta property="og:description" content="深入分析 wujie 微前端框架的 JavaScript 和 CSS 隔离机制实现">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="tech">
+    <meta property="article:published_time" content="2026-01-14T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-01-14T00:00:00+00:00">
+    <meta property="article:tag" content="微前端">
+    <meta property="article:tag" content="JavaScript">
+    <meta property="article:tag" content="CSS">
+    <meta property="article:tag" content="隔离机制">
+    <meta property="article:tag" content="前端架构">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="wujie 微前端框架隔离机制分析">
+  <meta name="twitter:description" content="深入分析 wujie 微前端框架的 JavaScript 和 CSS 隔离机制实现">
+<meta name="application-name" content="ZHOUKAILIAN Personal Blog">
+<meta name="apple-mobile-web-app-title" content="ZHOUKAILIAN Personal Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/tech/frontend/wujie-isolation/" /><link rel="prev" href="http://localhost:1313/tech/frontend/garfish-isolation/" /><link rel="next" href="http://localhost:1313/tech/frontend/qiankun/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "wujie 微前端框架隔离机制分析",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/tech\/frontend\/wujie-isolation\/"
+        },"genre": "tech","keywords": "微前端, JavaScript, CSS, 隔离机制, 前端架构","wordcount":  3800 ,
+        "url": "http:\/\/localhost:1313\/tech\/frontend\/wujie-isolation\/","datePublished": "2026-01-14T00:00:00+00:00","dateModified": "2026-01-14T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "ZHOUKAILIAN"
+            },"description": "深入分析 wujie 微前端框架的 JavaScript 和 CSS 隔离机制实现"
+    }
+    </script></head>
+    <body data-header-desktop="normal" data-header-mobile="normal"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="ZHOUKAILIAN Personal Blog">ZHOUKAILIAN Personal Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/tech/frontend/"> 前端 </a><a class="menu-item" href="/tech/backend/"> 后端 </a><a class="menu-item" href="/tech/ai/"> AI </a><a class="menu-item" href="/life/"> 生活 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="ZHOUKAILIAN Personal Blog">ZHOUKAILIAN Personal Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/tech/frontend/" title="">前端</a><a class="menu-item" href="/tech/backend/" title="">后端</a><a class="menu-item" href="/tech/ai/" title="">AI</a><a class="menu-item" href="/life/" title="">生活</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">wujie 微前端框架隔离机制分析</h1><div class="content" id="content"><h1 id="无界wujie微前端框架---隔离机制">无界（Wujie）微前端框架 - 隔离机制</h1>
+<h2 id="执行摘要">执行摘要</h2>
+<p>无界（Wujie）是一个成熟的微前端框架，采用了<strong>双重隔离策略</strong>，将基于 iframe 的 JavaScript 隔离与基于 Shadow DOM 的 CSS 隔离相结合。本分析报告深入研究了无界框架的核心实现机制、架构决策和权衡考量。</p>
+<h3 id="核心发现">核心发现</h3>
+<ul>
+<li><strong>混合架构</strong>：结合 iframe（JS 隔离）+ Shadow DOM（CSS 隔离）</li>
+<li><strong>原生浏览器 API</strong>：充分利用浏览器内置安全机制，无需重型 polyfill</li>
+<li><strong>低适配成本</strong>：子应用需要的修改最少</li>
+<li><strong>生产就绪</strong>：成熟的实现，具备完善的测试基础设施</li>
+</ul>
+<h2 id="框架概览">框架概览</h2>
+<h3 id="项目结构">项目结构</h3>
+<pre tabindex="0"><code>wujie/
+├── packages/
+│   ├── wujie-core/           # 核心微前端引擎（TypeScript）
+│   ├── wujie-react/          # React 组件包装器
+│   ├── wujie-vue2/           # Vue 2 组件包装器
+│   └── wujie-vue3/           # Vue 3 组件包装器
+├── examples/                 # 示例应用（React、Vue、Angular）
+├── docs/                     # 文档
+└── scripts/                  # 构建和工具脚本
+</code></pre><h3 id="技术栈">技术栈</h3>
+<ul>
+<li><strong>核心技术</strong>：TypeScript、Web Components、Shadow DOM、iframe</li>
+<li><strong>构建工具</strong>：Webpack 5、Babel 7、pnpm workspaces、Lerna</li>
+<li><strong>测试框架</strong>：Jest、Puppeteer 集成测试</li>
+<li><strong>框架支持</strong>：React、Vue 2/3、Angular</li>
+</ul>
+<hr>
+<h2 id="javascript-隔离实现">JavaScript 隔离实现</h2>
+<h3 id="核心架构">核心架构</h3>
+<p>JavaScript 隔离通过复杂的基于 iframe 的沙箱系统实现，配合智能代理层。</p>
+<h3 id="javascript-隔离执行流程详解">JavaScript 隔离执行流程详解</h3>
+<p>为了更好地理解无界框架的 JavaScript 隔离机制，让我们通过一个具体的示例来展示子应用代码执行时的完整隔离流程：</p>
+<h4 id="示例场景">示例场景</h4>
+<p>假设子应用执行以下代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 子应用代码示例
+</span></span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">.</span><span class="nx">myGlobal</span> <span class="o">=</span> <span class="s2">&#34;sub-app-value&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;app&#34;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">&#34;&lt;h1&gt;Hello World&lt;/h1&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&#34;click&#34;</span><span class="p">,</span> <span class="nx">handleClick</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;当前 URL:&#34;</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">);</span>
+</span></span></code></pre></div><h4 id="完整执行流程图">完整执行流程图</h4>
+
+<div class="plantuml">
+  <pre><code>
+@startuml
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 10
+
+title JavaScript 隔离执行流程 - 子应用代码运行时隔离机制
+
+actor "子应用代码" as SubApp
+participant "Window Proxy" as WinProxy
+participant "Document Proxy" as DocProxy
+participant "Location Proxy" as LocProxy
+participant "iframe Context" as IframeCtx
+participant "Shadow DOM" as ShadowDOM
+participant "主应用 Window" as MainWin
+
+== 1. 全局变量设置 ==
+SubApp -> WinProxy: window.myGlobal = 'sub-app-value'
+note right: 子应用尝试设置全局变量
+WinProxy -> WinProxy: 检查属性访问权限
+WinProxy -> IframeCtx: iframe.contentWindow.myGlobal = 'sub-app-value'
+note right: 变量被隔离在 iframe 上下文中
+IframeCtx -> WinProxy: 设置成功
+WinProxy -> SubApp: 返回 true
+
+note over SubApp, MainWin
+  **隔离效果**:
+  • 主应用 window.myGlobal = undefined
+  • 子应用 window.myGlobal = 'sub-app-value'
+  • 完全隔离，无污染
+end note
+
+== 2. DOM 操作 ==
+SubApp -> DocProxy: document.getElementById('app')
+note right: 子应用查找 DOM 元素
+DocProxy -> DocProxy: 检查查询类型和目标
+DocProxy -> ShadowDOM: shadowRoot.querySelector('#app')
+alt 在 Shadow DOM 中找到
+  ShadowDOM -> DocProxy: 返回 shadow 中的元素
+else 在 Shadow DOM 中未找到
+  DocProxy -> IframeCtx: iframe.document.querySelector('#app')
+  IframeCtx -> DocProxy: 返回 iframe 中的元素
+end
+DocProxy -> SubApp: 返回元素引用
+
+SubApp -> DocProxy: element.innerHTML = '<h1>Hello World</h1>'
+DocProxy -> ShadowDOM: 在 Shadow DOM 中设置内容
+note right: DOM 修改被隔离在 Shadow DOM 中
+
+note over SubApp, MainWin
+  **隔离效果**:
+  • 主应用 DOM 结构不受影响
+  • 子应用 DOM 封装在 Shadow DOM 中
+  • 样式和结构完全隔离
+end note
+
+== 3. 事件监听注册 ==
+SubApp -> WinProxy: window.addEventListener('click', handleClick)
+note right: 子应用注册事件监听器
+WinProxy -> WinProxy: 检查事件类型分类
+WinProxy -> WinProxy: 'click' 属于 mainDocumentAddEventListenerEvents
+WinProxy -> MainWin: window.addEventListener('click', boundHandler)
+note right: 事件监听器绑定到主应用 window\n但 handler 绑定到 iframe 上下文
+MainWin -> WinProxy: 注册成功
+
+note over SubApp, MainWin
+  **隔离效果**:
+  • 事件在主 window 上监听（全局事件）
+  • 处理函数上下文绑定到 iframe
+  • 事件处理时 this 指向正确的子应用上下文
+end note
+
+== 4. Location 访问 ==
+SubApp -> WinProxy: window.location.href
+note right: 子应用访问 location 信息
+WinProxy -> LocProxy: 代理到 Location Proxy
+LocProxy -> LocProxy: 执行 URL 转换逻辑
+LocProxy -> IframeCtx: 获取 iframe.location.href
+IframeCtx -> LocProxy: 返回 iframe URL
+LocProxy -> LocProxy: 转换为子应用 URL 格式
+note right: mainHostPath -> appHostPath 转换
+LocProxy -> WinProxy: 返回转换后的 URL
+WinProxy -> SubApp: 返回子应用 URL
+
+note over SubApp, MainWin
+  **隔离效果**:
+  • 子应用看到的是自己的 URL
+  • 路由变化不影响主应用
+  • URL 同步通过代理层处理
+end note
+
+== 5. 控制台输出 ==
+SubApp -> WinProxy: console.log('当前 URL:', url)
+note right: 子应用输出调试信息
+WinProxy -> IframeCtx: iframe.contentWindow.console.log(...)
+note right: 使用 iframe 的 console 对象
+IframeCtx -> IframeCtx: 在 iframe 上下文中输出
+note right: 调试信息标记为来自子应用
+
+note over SubApp, MainWin
+  **隔离效果**:
+  • 控制台输出带有子应用标识
+  • 调试信息不混淆
+  • 错误堆栈正确指向子应用代码
+end note
+
+@enduml
+</code></pre>
+</div>
+
+<h4 id="关键隔离机制详解">关键隔离机制详解</h4>
+<h5 id="1-全局变量隔离">1. <strong>全局变量隔离</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 proxy.ts 中的实现
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">proxyWindow</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">set</span><span class="o">:</span> <span class="p">(</span><span class="nx">target</span><span class="o">:</span> <span class="nx">Window</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">PropertyKey</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">checkProxyFunction</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">target</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span> <span class="c1">// 设置到 iframe.contentWindow
+</span></span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p><strong>隔离效果：</strong></p>
+<ul>
+<li>子应用的全局变量设置在 <code>iframe.contentWindow</code> 上</li>
+<li>主应用的 <code>window</code> 对象完全不受影响</li>
+<li>每个子应用都有独立的全局作用域</li>
+</ul>
+<h5 id="2-dom-访问隔离">2. <strong>DOM 访问隔离</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 proxy.ts 中的 Document 代理实现
+</span></span></span><span class="line"><span class="cl"><span class="nx">get</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_fakeDocument</span><span class="p">,</span> <span class="nx">propKey</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;getElementById&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">shadowRoot</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">apply</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 优先在 Shadow DOM 中查找
+</span></span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">target</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">shadowRoot</span><span class="p">,</span> <span class="sb">`[id=&#34;</span><span class="si">${</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="sb">&#34;]`</span><span class="p">)</span> <span class="o">||</span>
+</span></span><span class="line"><span class="cl">               <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nx">__WUJIE_RAW_DOCUMENT_QUERY_SELECTOR__</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                 <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">,</span> <span class="sb">`#</span><span class="si">${</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="sb">`</span>
+</span></span><span class="line"><span class="cl">               <span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>隔离效果：</strong></p>
+<ul>
+<li>DOM 查询首先在 Shadow DOM 中进行</li>
+<li>如果 Shadow DOM 中没有，则在 iframe 文档中查找</li>
+<li>主应用 DOM 结构完全不可访问</li>
+</ul>
+<h5 id="3-事件系统隔离">3. <strong>事件系统隔离</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 iframe.ts 中的事件处理
+</span></span></span><span class="line"><span class="cl"><span class="nx">iframeWindow</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addEventListener</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">type</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">listener</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">options</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 根据事件类型分类处理
+</span></span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">appWindowAddEventListenerEvents</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">type</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 子应用特定事件：在 iframe 上监听
+</span></span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">rawWindowAddEventListener</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">iframeWindow</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">type</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">listener</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">options</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 全局事件：在主 window 上监听，但绑定子应用上下文
+</span></span></span><span class="line"><span class="cl">  <span class="nx">rawWindowAddEventListener</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">window</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">type</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">listener</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">iframeWindow</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">options</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p><strong>隔离效果：</strong></p>
+<ul>
+<li>路由事件（hashchange, popstate）在 iframe 内处理</li>
+<li>全局事件（click, keydown）在主 window 监听但上下文隔离</li>
+<li>事件处理函数的 <code>this</code> 始终指向正确的上下文</li>
+</ul>
+<h5 id="4-location-对象隔离">4. <strong>Location 对象隔离</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 proxy.ts 中的 Location 代理
+</span></span></span><span class="line"><span class="cl"><span class="nx">get</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_fakeLocation</span><span class="p">,</span> <span class="nx">propKey</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;href&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// URL 转换：mainHostPath -&gt; appHostPath
+</span></span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">location</span><span class="p">[</span><span class="nx">propKey</span><span class="p">].</span><span class="nx">replace</span><span class="p">(</span><span class="nx">mainHostPath</span><span class="p">,</span> <span class="nx">appHostPath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;host&#34;</span> <span class="o">||</span> <span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;hostname&#34;</span> <span class="o">||</span> <span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;protocol&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">urlElement</span><span class="p">[</span><span class="nx">propKey</span><span class="p">];</span>  <span class="c1">// 返回子应用的 host 信息
+</span></span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>隔离效果：</strong></p>
+<ul>
+<li>子应用看到的 URL 是转换后的应用 URL</li>
+<li>路由变化通过代理层同步</li>
+<li>主应用路由状态不受子应用影响</li>
+</ul>
+<h4 id="内存隔离示意图">内存隔离示意图</h4>
+
+<div class="plantuml">
+  <pre><code>
+@startuml
+!theme plain
+skinparam backgroundColor #FEFEFE
+
+title JavaScript 内存隔离示意图
+
+package "主应用内存空间" {
+  [主应用 Window] as MainWindow
+  [主应用全局变量] as MainGlobals
+  [主应用 DOM] as MainDOM
+  MainWindow --> MainGlobals
+  MainWindow --> MainDOM
+}
+
+package "子应用 A 内存空间 (iframe)" {
+  [iframe Window A] as IframeA
+  [子应用 A 全局变量] as GlobalsA
+  [子应用 A DOM] as DOMA
+  IframeA --> GlobalsA
+  IframeA --> DOMA
+}
+
+package "子应用 B 内存空间 (iframe)" {
+  [iframe Window B] as IframeB
+  [子应用 B 全局变量] as GlobalsB
+  [子应用 B DOM] as DOMB
+  IframeB --> GlobalsB
+  IframeB --> DOMB
+}
+
+package "代理层" {
+  [Window Proxy A] as ProxyA
+  [Window Proxy B] as ProxyB
+  [Document Proxy A] as DocProxyA
+  [Document Proxy B] as DocProxyB
+}
+
+ProxyA --> IframeA : 代理访问
+ProxyB --> IframeB : 代理访问
+DocProxyA --> DOMA : DOM 操作
+DocProxyB --> DOMB : DOM 操作
+
+note right of MainWindow
+  主应用内存空间完全独立
+  不受子应用影响
+end note
+
+note right of IframeA
+  每个子应用都有独立的
+  JavaScript 执行环境
+end note
+
+note bottom of ProxyA
+  代理层确保正确的
+  上下文绑定和隔离
+end note
+
+@enduml
+</code></pre>
+</div>
+
+<h4 id="执行上下文隔离验证">执行上下文隔离验证</h4>
+<p>通过以下代码可以验证隔离效果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在主应用中
+</span></span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">.</span><span class="nx">testVar</span> <span class="o">=</span> <span class="s2">&#34;main-app&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;主应用:&#34;</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">testVar</span><span class="p">);</span> <span class="c1">// 输出: &#39;main-app&#39;
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 在子应用中
+</span></span></span><span class="line"><span class="cl"><span class="nb">window</span><span class="p">.</span><span class="nx">testVar</span> <span class="o">=</span> <span class="s2">&#34;sub-app&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;子应用:&#34;</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">testVar</span><span class="p">);</span> <span class="c1">// 输出: &#39;sub-app&#39;
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 回到主应用检查
+</span></span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;主应用检查:&#34;</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">testVar</span><span class="p">);</span> <span class="c1">// 仍然输出: &#39;main-app&#39;
+</span></span></span></code></pre></div><p><strong>验证结果：</strong></p>
+<ul>
+<li>主应用和子应用的全局变量完全隔离</li>
+<li>子应用无法访问或修改主应用的全局状态</li>
+<li>每个 iframe 都有独立的 JavaScript 执行环境</li>
+</ul>
+<h3 id="关键问题解析iframe-执行-vs-shadow-dom-渲染">关键问题解析：iframe 执行 vs Shadow DOM 渲染</h3>
+<p>您提出了一个非常重要的问题！确实，JavaScript 在 iframe 中执行，但最终渲染在 Shadow DOM 中。这个&quot;桥接&quot;机制是无界框架的核心创新。</p>
+<h4 id="iframe-与-shadow-dom-的分工机制">iframe 与 Shadow DOM 的分工机制</h4>
+
+<div class="plantuml">
+  <pre><code>
+@startuml
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam componentStyle rectangle
+
+title 无界框架：iframe 执行 + Shadow DOM 渲染的分离架构
+
+package "主应用页面" {
+  component [主应用容器] as MainContainer
+
+  package "Shadow DOM 渲染层" {
+    component [<wujie-app>] as WujieApp
+    component [Shadow Root] as ShadowRoot {
+      component [渲染的 HTML] as RenderedHTML
+      component [渲染的 CSS] as RenderedCSS
+    }
+  }
+
+  package "iframe 执行层（隐藏）" {
+    component [iframe Sandbox] as IframeSandbox {
+      component [子应用 JS 代码] as SubAppJS
+      component [iframe Document] as IframeDoc
+      component [iframe Window] as IframeWin
+    }
+  }
+}
+
+package "DOM 操作桥接机制" {
+  component [Document Proxy] as DocProxy
+  component [DOM 拦截器] as DOMInterceptor
+  component [元素迁移器] as ElementMover
+}
+
+' JavaScript 执行流程
+SubAppJS --> IframeWin : 在 iframe 上下文中执行
+SubAppJS --> DocProxy : 通过代理访问 document
+
+' DOM 操作拦截和重定向
+DocProxy --> DOMInterceptor : 拦截 DOM 操作
+DOMInterceptor --> IframeDoc : 在 iframe 中创建元素
+DOMInterceptor --> ElementMover : 触发元素迁移
+
+' 元素从 iframe 迁移到 Shadow DOM
+ElementMover --> IframeDoc : 从 iframe 获取元素
+ElementMover --> RenderedHTML : 迁移到 Shadow DOM
+
+' 最终渲染
+RenderedHTML --> ShadowRoot : 在 Shadow DOM 中渲染
+ShadowRoot --> WujieApp : 封装在 Web Component 中
+WujieApp --> MainContainer : 显示在主应用中
+
+note right of IframeSandbox
+  **iframe 的作用**：
+  • JavaScript 执行沙箱
+  • 全局变量隔离
+  • 原型链隔离
+  • 但不用于渲染！
+end note
+
+note right of ShadowRoot
+  **Shadow DOM 的作用**：
+  • CSS 样式隔离
+  • DOM 结构封装
+  • 实际的视觉渲染
+  • 但不执行 JavaScript！
+end note
+
+note bottom of ElementMover
+  **关键桥接机制**：
+  DOM 元素在 iframe 中创建，
+  但立即迁移到 Shadow DOM 中渲染
+end note
+
+@enduml
+</code></pre>
+</div>
+
+<h4 id="dom-操作的完整流程解析">DOM 操作的完整流程解析</h4>
+<p>让我们详细分析当子应用执行 <code>document.createElement('div')</code> 时发生了什么：</p>
+
+<div class="plantuml">
+  <pre><code>
+@startuml
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam sequenceArrowThickness 2
+
+title DOM 元素创建与迁移的完整流程
+
+participant "子应用 JS" as SubJS
+participant "Document Proxy" as DocProxy
+participant "iframe Document" as IframeDoc
+participant "元素补丁器" as Patcher
+participant "Shadow DOM" as Shadow
+participant "DOM 拦截器" as Interceptor
+
+== 1. 元素创建阶段 ==
+SubJS -> DocProxy: document.createElement('div')
+note right: 子应用尝试创建 DOM 元素
+
+DocProxy -> IframeDoc: iframe.contentDocument.createElement('div')
+note right: 在 iframe 中实际创建元素
+
+IframeDoc -> DocProxy: 返回 iframe 中的 div 元素
+note right: 元素在 iframe 的文档上下文中
+
+DocProxy -> Patcher: patchElementEffect(element, iframeWindow)
+note right: 对元素进行补丁处理
+
+Patcher -> Patcher: 设置 element.ownerDocument = iframeWindow.document
+note right: 确保元素的 ownerDocument 指向 iframe
+
+Patcher -> Patcher: 设置 element.baseURI = proxyLocation.href
+note right: 修正元素的 baseURI
+
+Patcher -> DocProxy: 返回补丁后的元素
+DocProxy -> SubJS: 返回元素引用
+
+== 2. 元素插入阶段 ==
+SubJS -> DocProxy: document.body.appendChild(div)
+note right: 子应用尝试插入元素
+
+DocProxy -> Interceptor: 拦截 appendChild 操作
+note right: DOM 操作被拦截
+
+Interceptor -> Interceptor: 检查目标是 Shadow DOM 还是 iframe
+note right: 根据操作类型决定目标
+
+alt 插入到 Shadow DOM
+  Interceptor -> Shadow: shadowRoot.body.appendChild(div)
+  note right: 元素从 iframe 迁移到 Shadow DOM
+  Shadow -> Shadow: 元素在 Shadow DOM 中渲染
+else 插入到 iframe（特殊情况）
+  Interceptor -> IframeDoc: iframe.body.appendChild(div)
+  note right: 某些元素保留在 iframe 中
+end
+
+note over SubJS, IframeDoc
+  **关键机制**：
+  • 元素在 iframe 中创建（保持正确的上下文）
+  • 立即迁移到 Shadow DOM 中渲染
+  • 元素的 ownerDocument 仍指向 iframe
+  • 但视觉呈现在 Shadow DOM 中
+end note
+
+@enduml
+</code></pre>
+</div>
+
+<h4 id="核心实现代码解析">核心实现代码解析</h4>
+<p>让我们看看具体的实现代码：</p>
+<p><strong>1. 元素创建的代理处理</strong> (<code>proxy.ts:94-102</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;createElement&#34;</span> <span class="o">||</span> <span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;createTextNode&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nb">document</span><span class="p">[</span><span class="nx">propKey</span><span class="p">],</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">apply</span><span class="p">(</span><span class="nx">_createElement</span><span class="p">,</span> <span class="nx">_ctx</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 在 iframe 的文档中创建元素
+</span></span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">rawCreateMethod</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;createElement&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="o">?</span> <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nx">__WUJIE_RAW_DOCUMENT_CREATE_ELEMENT__</span>
+</span></span><span class="line"><span class="cl">          <span class="o">:</span> <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nx">__WUJIE_RAW_DOCUMENT_CREATE_TEXT_NODE__</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nx">rawCreateMethod</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">iframe</span><span class="p">.</span><span class="nx">contentDocument</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c1">// 关键：对元素进行补丁，建立与 Shadow DOM 的连接
+</span></span></span><span class="line"><span class="cl">      <span class="nx">patchElementEffect</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">element</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>2. 元素补丁机制</strong> (<code>iframe.ts:735-758</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">patchElementEffect</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">iframeWindow</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">proxyLocation</span> <span class="o">=</span> <span class="nx">iframeWindow</span><span class="p">.</span><span class="nx">__WUJIE</span><span class="p">.</span><span class="nx">proxyLocation</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 修正 baseURI 指向子应用的 URL
+</span></span></span><span class="line"><span class="cl">      <span class="nx">baseURI</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">get</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">proxyLocation</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">          <span class="s2">&#34;//&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">proxyLocation</span><span class="p">.</span><span class="nx">host</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">proxyLocation</span><span class="p">.</span><span class="nx">pathname</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">set</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 保持 ownerDocument 指向 iframe
+</span></span></span><span class="line"><span class="cl">      <span class="nx">ownerDocument</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">get</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">iframeWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">_hasPatch</span><span class="o">:</span> <span class="p">{</span> <span class="nx">get</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="kc">true</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>3. DOM 操作拦截和重定向</strong> (<code>effect.ts:169-351</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">rewriteAppendOrInsertChild</span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="kd">function</span> <span class="nx">appendChildOrInsertBefore</span><span class="p">(</span><span class="nx">newChild</span><span class="p">,</span> <span class="nx">refChild</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">element</span> <span class="o">=</span> <span class="nx">newChild</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">{</span> <span class="nx">wujieId</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">sandbox</span> <span class="o">=</span> <span class="nx">getWujieById</span><span class="p">(</span><span class="nx">wujieId</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 检查是否需要特殊处理的标签
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isHijackingTag</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">tagName</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="nx">wujieId</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 普通元素：直接插入到 Shadow DOM
+</span></span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">rawDOMAppendOrInsertBefore</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">refChild</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">patchElementEffect</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">sandbox</span><span class="p">.</span><span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 特殊元素（script、style、link）需要特殊处理
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// 这些元素可能需要在 iframe 中处理后再迁移
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="为什么这样设计">为什么这样设计？</h4>
+<p>这种分离设计解决了几个关键问题：</p>
+<p><strong>1. JavaScript 上下文隔离</strong>：</p>
+<ul>
+<li>代码必须在 iframe 中执行才能获得完整的上下文隔离</li>
+<li>全局变量、原型链、内置对象都需要独立的环境</li>
+</ul>
+<p><strong>2. 视觉渲染隔离</strong>：</p>
+<ul>
+<li>Shadow DOM 提供了最好的 CSS 隔离</li>
+<li>但 Shadow DOM 不能提供 JavaScript 执行隔离</li>
+</ul>
+<p><strong>3. 性能优化</strong>：</p>
+<ul>
+<li>iframe 设置为 <code>display: none</code>，不参与渲染</li>
+<li>Shadow DOM 负责实际的视觉呈现</li>
+<li>避免了 iframe 的渲染开销</li>
+</ul>
+<p><strong>4. 用户体验</strong>：</p>
+<ul>
+<li>用户看到的是 Shadow DOM 中的内容</li>
+<li>没有 iframe 的滚动条、边框等视觉问题</li>
+<li>保持了原生的用户交互体验</li>
+</ul>
+<h4 id="内存和引用关系图">内存和引用关系图</h4>
+
+<div class="plantuml">
+  <pre><code>
+@startuml
+!theme plain
+skinparam backgroundColor #FEFEFE
+
+title 元素的内存引用关系
+
+object "iframe Document" as IframeDoc {
+  ownerDocument: iframe.contentDocument
+  createElement(): 在 iframe 中创建
+}
+
+object "创建的 DOM 元素" as Element {
+  ownerDocument: iframe.contentDocument
+  baseURI: 子应用 URL
+  parentNode: Shadow DOM 节点
+}
+
+object "Shadow DOM" as ShadowDOM {
+  实际渲染位置
+  CSS 隔离边界
+}
+
+object "代理层" as Proxy {
+  拦截 DOM 操作
+  元素迁移逻辑
+}
+
+IframeDoc --> Element : 创建元素
+Element --> ShadowDOM : 迁移到此处渲染
+Proxy --> Element : 补丁和迁移
+Element --> IframeDoc : ownerDocument 仍指向 iframe
+
+note right of Element
+  **元素的双重身份**：
+  • 在 iframe 中创建和拥有
+  • 在 Shadow DOM 中渲染和显示
+  • 通过代理层建立连接
+end note
+
+@enduml
+</code></pre>
+</div>
+
+<p>这就是无界框架最精妙的设计：<strong>JavaScript 执行在 iframe，DOM 渲染在 Shadow DOM，通过代理层实现无缝桥接</strong>。这种设计既保证了完整的隔离，又提供了良好的用户体验。</p>
+<h4 id="函数调用链详细分析">函数调用链详细分析</h4>
+<p>让我们深入分析一个具体的 DOM 操作是如何通过代理层实现隔离的：</p>
+
+<div class="plantuml">
+  <pre><code>
+@startuml
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam sequenceArrowThickness 2
+
+title 深度解析：document.getElementById() 的隔离执行链
+
+participant "子应用代码" as SubApp
+participant "Document Proxy" as DocProxy
+participant "代理处理器" as Handler
+participant "Shadow DOM" as Shadow
+participant "iframe Document" as IframeDoc
+participant "属性分类器" as Classifier
+
+== 函数调用开始 ==
+SubApp -> DocProxy: document.getElementById('myElement')
+note right: 子应用尝试查找 DOM 元素
+
+DocProxy -> Handler: 触发 get 陷阱
+note right: Proxy 的 get 处理器被调用
+
+Handler -> Classifier: 检查 'getElementById' 属性类型
+note right: 查询属性分类配置
+
+Classifier -> Handler: 返回 'modifyProperties' 分类
+note right: getElementById 需要特殊处理
+
+Handler -> Handler: 创建新的 Proxy 包装器
+note right: 为 querySelector 方法创建代理
+
+== 查询执行阶段 ==
+Handler -> Shadow: shadowRoot.querySelector('[id="myElement"]')
+note right: 优先在 Shadow DOM 中查找
+
+alt 在 Shadow DOM 中找到元素
+  Shadow -> Handler: 返回 shadow 元素
+  Handler -> DocProxy: 返回元素引用
+  DocProxy -> SubApp: 返回 shadow 中的元素
+  note right: 成功找到，返回 Shadow DOM 元素
+else 在 Shadow DOM 中未找到
+  Shadow -> Handler: 返回 null
+  Handler -> IframeDoc: iframe.document.querySelector('#myElement')
+  note right: 回退到 iframe 文档查找
+
+  alt 在 iframe 文档中找到
+    IframeDoc -> Handler: 返回 iframe 元素
+    Handler -> DocProxy: 返回元素引用
+    DocProxy -> SubApp: 返回 iframe 中的元素
+    note right: 在 iframe 中找到元素
+  else 在 iframe 文档中也未找到
+    IframeDoc -> Handler: 返回 null
+    Handler -> DocProxy: 返回 null
+    DocProxy -> SubApp: 返回 null
+    note right: 元素不存在
+  end
+end
+
+note over SubApp, IframeDoc
+  **隔离保证**：
+  • 主应用 DOM 永远不会被访问
+  • 查询范围限制在子应用的隔离环境中
+  • 即使元素不存在，也不会泄露主应用信息
+end note
+
+@enduml
+</code></pre>
+</div>
+
+<h4 id="代理层性能优化机制">代理层性能优化机制</h4>
+<p>无界框架在保证隔离的同时，也实现了多项性能优化：</p>
+<h5 id="1-属性访问缓存">1. <strong>属性访问缓存</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 common.ts 中的属性分类预计算
+</span></span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">documentProxyProperties</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">shadowProperties</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;activeElement&#34;</span><span class="p">,</span> <span class="s2">&#34;children&#34;</span><span class="p">,</span> <span class="s2">&#34;styleSheets&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">documentProperties</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;characterSet&#34;</span><span class="p">,</span> <span class="s2">&#34;readyState&#34;</span><span class="p">,</span> <span class="s2">&#34;fonts&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">modifyProperties</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;createElement&#34;</span><span class="p">,</span> <span class="s2">&#34;querySelector&#34;</span><span class="p">,</span> <span class="s2">&#34;getElementById&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// ... 预先分类，避免运行时计算
+</span></span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 在 proxy.ts 中的优化访问
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">propertyCache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">getPropertyCategory</span><span class="p">(</span><span class="nx">propKey</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">propertyCache</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">propKey</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">propertyCache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">propKey</span><span class="p">);</span> <span class="c1">// 缓存命中
+</span></span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 计算属性分类并缓存
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">category</span> <span class="o">=</span> <span class="nx">calculateCategory</span><span class="p">(</span><span class="nx">propKey</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">propertyCache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">propKey</span><span class="p">,</span> <span class="nx">category</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">category</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="2-方法绑定优化">2. <strong>方法绑定优化</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 utils.ts 中的 getTargetValue 函数
+</span></span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">getTargetValue</span><span class="p">(</span><span class="nx">target</span><span class="o">:</span> <span class="nx">any</span><span class="p">,</span> <span class="nx">p</span><span class="o">:</span> <span class="nx">PropertyKey</span><span class="p">)</span><span class="o">:</span> <span class="nx">any</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">target</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 对于函数，确保正确的 this 绑定
+</span></span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span> <span class="o">===</span> <span class="s2">&#34;function&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span><span class="o">?</span><span class="p">.</span><span class="nx">configurable</span> <span class="o">===</span> <span class="kc">false</span> <span class="o">&amp;&amp;</span> <span class="nx">descriptor</span><span class="o">?</span><span class="p">.</span><span class="nx">writable</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">value</span><span class="p">;</span> <span class="c1">// 不可配置的属性直接返回
+</span></span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span> <span class="c1">// 绑定正确的 this 上下文
+</span></span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="3-事件处理优化">3. <strong>事件处理优化</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 iframe.ts 中的事件分类优化
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">eventTypeCache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">getEventCategory</span><span class="p">(</span><span class="nx">type</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="s2">&#34;app&#34;</span> <span class="o">|</span> <span class="s2">&#34;main&#34;</span> <span class="o">|</span> <span class="s2">&#34;both&#34;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">eventTypeCache</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">type</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">eventTypeCache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">type</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">category</span><span class="o">:</span> <span class="s2">&#34;app&#34;</span> <span class="o">|</span> <span class="s2">&#34;main&#34;</span> <span class="o">|</span> <span class="s2">&#34;both&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">appWindowAddEventListenerEvents</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">type</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">category</span> <span class="o">=</span> <span class="s2">&#34;app&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">mainDocumentAddEventListenerEvents</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">type</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">category</span> <span class="o">=</span> <span class="s2">&#34;main&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">category</span> <span class="o">=</span> <span class="s2">&#34;both&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">eventTypeCache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">category</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">category</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="隔离边界的安全检查">隔离边界的安全检查</h4>
+<p>无界框架实现了多层安全检查，确保隔离边界不被突破：</p>
+<h5 id="1-函数类型检查">1. <strong>函数类型检查</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 utils.ts 中的安全检查
+</span></span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">checkProxyFunction</span><span class="p">(</span><span class="nx">target</span><span class="o">:</span> <span class="nx">Window</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span> <span class="o">===</span> <span class="s2">&#34;function&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 检查是否为构造函数
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">isConstructable</span><span class="p">(</span><span class="nx">value</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 构造函数需要特殊处理，确保原型链隔离
+</span></span></span><span class="line"><span class="cl">      <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="s2">&#34;prototype&#34;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">get</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">target</span><span class="p">.</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 检查是否为原生函数
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">includes</span><span class="p">(</span><span class="s2">&#34;[native code]&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 原生函数需要绑定到正确的上下文
+</span></span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="2-原型链保护">2. <strong>原型链保护</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 iframe.ts 中的原型链修复
+</span></span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">patchWindowEffect</span><span class="p">(</span><span class="nx">iframeWindow</span><span class="o">:</span> <span class="nx">Window</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 确保内置对象的原型链正确
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">builtinObjects</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;Array&#34;</span><span class="p">,</span> <span class="s2">&#34;Object&#34;</span><span class="p">,</span> <span class="s2">&#34;Function&#34;</span><span class="p">,</span> <span class="s2">&#34;Date&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">builtinObjects</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">objName</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">iframeWindow</span><span class="p">[</span><span class="nx">objName</span><span class="p">]</span> <span class="o">!==</span> <span class="nb">window</span><span class="p">[</span><span class="nx">objName</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 保持 iframe 内部的原型链独立
+</span></span></span><span class="line"><span class="cl">      <span class="nb">Object</span><span class="p">.</span><span class="nx">setPrototypeOf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">iframeWindow</span><span class="p">[</span><span class="nx">objName</span><span class="p">].</span><span class="nx">prototype</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">iframeWindow</span><span class="p">.</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span>
+</span></span><span class="line"><span class="cl">      <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="3-内存泄漏防护">3. <strong>内存泄漏防护</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 在 sandbox.ts 中的清理机制
+</span></span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">WuJie</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">private</span> <span class="nx">cleanupTasks</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="k">void</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">destroy</span><span class="p">()</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 清理事件监听器
+</span></span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">elementEventCacheMap</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">listeners</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">listeners</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(({</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">handler</span> <span class="p">})</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">element</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">handler</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 清理代理引用
+</span></span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">proxyWindow</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">proxyDocument</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">proxyLocation</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 执行自定义清理任务
+</span></span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">cleanupTasks</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">cleanup</span> <span class="p">=&gt;</span> <span class="nx">cleanup</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">cleanupTasks</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 移除 iframe
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">iframe</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">iframe</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">iframe</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">iframe</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="关键文件">关键文件</h4>
+<table>
+  <thead>
+      <tr>
+          <th>文件</th>
+          <th>用途</th>
+          <th>大小</th>
+          <th>关键函数</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>iframe.ts</code></td>
+          <td>iframe 沙箱创建与管理</td>
+          <td>35KB</td>
+          <td><code>iframeGenerator</code>、<code>patchIframeEvents</code></td>
+      </tr>
+      <tr>
+          <td><code>proxy.ts</code></td>
+          <td>Window/Document/Location 代理实现</td>
+          <td>13KB</td>
+          <td><code>proxyGenerator</code>、<code>localGenerator</code></td>
+      </tr>
+      <tr>
+          <td><code>sandbox.ts</code></td>
+          <td>核心 Wujie 类，管理沙箱生命周期</td>
+          <td>19KB</td>
+          <td>Wujie 类定义</td>
+      </tr>
+      <tr>
+          <td><code>common.ts</code></td>
+          <td>属性分类和工具函数</td>
+          <td>6KB</td>
+          <td><code>documentProxyProperties</code></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="代理层实现原理深度解析">代理层实现原理深度解析</h4>
+<p>无界框架的核心在于其精妙的代理层设计，通过 JavaScript Proxy 对象实现了对子应用 API 访问的完全控制和隔离。</p>
+<h5 id="1-三层代理架构">1. <strong>三层代理架构</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 代理层架构示意 (proxy.ts)
+</span></span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">proxyGenerator</span><span class="p">(</span><span class="nx">iframe</span><span class="p">,</span> <span class="nx">urlElement</span><span class="p">,</span> <span class="nx">mainHostPath</span><span class="p">,</span> <span class="nx">appHostPath</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">proxyWindow</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">,</span> <span class="nx">windowProxyHandler</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">proxyDocument</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">({},</span> <span class="nx">documentProxyHandler</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">proxyLocation</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">({},</span> <span class="nx">locationProxyHandler</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>架构特点：</strong></p>
+<ul>
+<li><strong>Window Proxy</strong>: 拦截所有 window 对象访问</li>
+<li><strong>Document Proxy</strong>: 智能路由 DOM 操作</li>
+<li><strong>Location Proxy</strong>: 处理 URL 和路由相关操作</li>
+</ul>
+<h5 id="2-window-代理的智能拦截">2. <strong>Window 代理的智能拦截</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// Window 代理的核心逻辑 (proxy.ts:50-80)
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">windowProxyHandler</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">get</span><span class="o">:</span> <span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">property</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 特殊属性重定向
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">property</span> <span class="o">===</span> <span class="s2">&#34;location&#34;</span><span class="p">)</span> <span class="k">return</span> <span class="nx">target</span><span class="p">.</span><span class="nx">__WUJIE</span><span class="p">.</span><span class="nx">proxyLocation</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">property</span> <span class="o">===</span> <span class="s2">&#34;document&#34;</span><span class="p">)</span> <span class="k">return</span> <span class="nx">target</span><span class="p">.</span><span class="nx">__WUJIE</span><span class="p">.</span><span class="nx">proxyDocument</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">property</span> <span class="o">===</span> <span class="s2">&#34;self&#34;</span> <span class="o">||</span> <span class="nx">property</span> <span class="o">===</span> <span class="s2">&#34;window&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">target</span><span class="p">.</span><span class="nx">__WUJIE</span><span class="p">.</span><span class="nx">proxy</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 原生方法绑定检查
+</span></span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">property</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">descriptor</span><span class="o">?</span><span class="p">.</span><span class="nx">configurable</span> <span class="o">===</span> <span class="kc">false</span> <span class="o">&amp;&amp;</span> <span class="nx">descriptor</span><span class="o">?</span><span class="p">.</span><span class="nx">writable</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">target</span><span class="p">[</span><span class="nx">property</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 确保 this 指向正确
+</span></span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">getTargetValue</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">property</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">set</span><span class="o">:</span> <span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">property</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">checkProxyFunction</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span> <span class="c1">// 安全检查
+</span></span></span><span class="line"><span class="cl">    <span class="nx">target</span><span class="p">[</span><span class="nx">property</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span> <span class="c1">// 设置到 iframe 上下文
+</span></span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h5 id="3-document-代理的分层路由">3. <strong>Document 代理的分层路由</strong></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// Document 代理的路由逻辑 (proxy.ts:83-206)
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">documentProxyHandler</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">get</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_fakeDocument</span><span class="p">,</span> <span class="nx">propKey</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="p">{</span> <span class="nx">shadowRoot</span><span class="p">,</span> <span class="nx">proxyLocation</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nx">__WUJIE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// DOM 创建方法的特殊处理
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;createElement&#34;</span> <span class="o">||</span> <span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;createTextNode&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nb">document</span><span class="p">[</span><span class="nx">propKey</span><span class="p">],</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">apply</span><span class="p">(</span><span class="nx">_method</span><span class="p">,</span> <span class="nx">_ctx</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="kr">const</span> <span class="nx">rawMethod</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;createElement&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="o">?</span> <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nx">__WUJIE_RAW_DOCUMENT_CREATE_ELEMENT__</span>
+</span></span><span class="line"><span class="cl">              <span class="o">:</span> <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nx">__WUJIE_RAW_DOCUMENT_CREATE_TEXT_NODE__</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">          <span class="kr">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nx">rawMethod</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">iframe</span><span class="p">.</span><span class="nx">contentDocument</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">patchElementEffect</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">);</span> <span class="c1">// 元素补丁
+</span></span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">element</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 查询方法的智能路由
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;querySelector&#34;</span> <span class="o">||</span> <span class="nx">propKey</span> <span class="o">===</span> <span class="s2">&#34;querySelectorAll&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">shadowRoot</span><span class="p">[</span><span class="nx">propKey</span><span class="p">],</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">apply</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="c1">// 优先在 Shadow DOM 中查询
+</span></span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">target</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">shadowRoot</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="o">||</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nx">__WUJIE_RAW_DOCUMENT_QUERY_SELECTOR__</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">              <span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 基于属性分类的路由决策
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">shadowProperties</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">propKey</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">shadowRoot</span><span class="p">[</span><span class="nx">propKey</span><span class="p">];</span> <span class="c1">// 来自 Shadow DOM
+</span></span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">documentProperties</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">propKey</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nb">document</span><span class="p">[</span><span class="nx">propKey</span><span class="p">];</span> <span class="c1">// 来自主文档
+</span></span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h3 id="实现机制">实现机制</h3>
+<h4 id="1-iframe-沙箱创建">1. iframe 沙箱创建</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">iframeGenerator</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">sandbox</span>: <span class="kt">WuJie</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">attrs</span><span class="o">:</span> <span class="p">{</span> <span class="p">[</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">]</span><span class="o">:</span> <span class="kt">any</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">mainHostPath</span>: <span class="kt">string</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">appHostPath</span>: <span class="kt">string</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">appRoutePath</span>: <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span><span class="o">:</span> <span class="nx">HTMLIFrameElement</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 创建同源 iframe 避免跨域限制
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">iframe</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;iframe&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">src</span> <span class="o">=</span> <span class="nx">getSandboxEmptyPageURL</span><span class="p">()</span> <span class="o">||</span> <span class="nx">mainHostPath</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 阻止 iframe 加载主应用 HTML
+</span></span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">stopIframeLoading</span><span class="p">(</span><span class="nx">iframe</span><span class="p">,</span> <span class="nx">useObjectURL</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">initIframeDom</span><span class="p">(</span><span class="nx">iframeWindow</span><span class="p">,</span> <span class="nx">sandbox</span><span class="p">,</span> <span class="nx">mainHostPath</span><span class="p">,</span> <span class="nx">appHostPath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>关键设计决策：</strong></p>
+<ul>
+<li><strong>同源 iframe</strong>：避免跨域限制的同时保持隔离</li>
+<li><strong>空页面加载</strong>：使用 <code>blob:</code> URL 防止加载主应用内容</li>
+<li><strong>DOM 初始化</strong>：用干净的 HTML 结构替换 iframe 文档</li>
+</ul>
+<h4 id="2-代理系统架构">2. 代理系统架构</h4>
+<p><strong>Window 代理</strong> (<code>proxy.ts:50-80</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">proxyWindow</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Proxy</span><span class="p">(</span><span class="nx">iframe</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">get</span><span class="o">:</span> <span class="p">(</span><span class="nx">target</span>: <span class="kt">Window</span><span class="p">,</span> <span class="nx">p</span>: <span class="kt">PropertyKey</span><span class="p">)</span><span class="o">:</span> <span class="kt">any</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s2">&#34;location&#34;</span><span class="p">)</span> <span class="k">return</span> <span class="nx">target</span><span class="p">.</span><span class="nx">__WUJIE</span><span class="p">.</span><span class="nx">proxyLocation</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">===</span> <span class="s2">&#34;self&#34;</span> <span class="o">||</span> <span class="nx">p</span> <span class="o">===</span> <span class="s2">&#34;window&#34;</span><span class="p">)</span> <span class="k">return</span> <span class="nx">target</span><span class="p">.</span><span class="nx">__WUJIE</span><span class="p">.</span><span class="nx">proxy</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">getTargetValue</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">set</span><span class="o">:</span> <span class="p">(</span><span class="nx">target</span>: <span class="kt">Window</span><span class="p">,</span> <span class="nx">p</span>: <span class="kt">PropertyKey</span><span class="p">,</span> <span class="nx">value</span>: <span class="kt">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">target</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p><strong>Document 代理特性：</strong></p>
+<ul>
+<li><strong>createElement/createTextNode</strong>：重定向到 iframe 文档并进行元素补丁</li>
+<li><strong>查询方法</strong>：在 Shadow DOM 和 iframe 文档间智能路由</li>
+<li><strong>属性分类</strong>：将不同 API 路由到适当的上下文</li>
+</ul>
+<h4 id="3-属性分类系统">3. 属性分类系统</h4>
+<p>框架将文档属性分类为不同类别，以实现智能路由：</p>
+<table>
+  <thead>
+      <tr>
+          <th>分类</th>
+          <th>用途</th>
+          <th>示例</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>shadowProperties</strong></td>
+          <td>来自 Shadow DOM</td>
+          <td><code>activeElement</code>、<code>children</code>、<code>styleSheets</code></td>
+      </tr>
+      <tr>
+          <td><strong>shadowMethods</strong></td>
+          <td>来自 Shadow DOM</td>
+          <td><code>contains</code>、<code>getSelection</code>、<code>elementFromPoint</code></td>
+      </tr>
+      <tr>
+          <td><strong>documentProperties</strong></td>
+          <td>来自主文档</td>
+          <td><code>characterSet</code>、<code>readyState</code>、<code>fonts</code></td>
+      </tr>
+      <tr>
+          <td><strong>documentMethods</strong></td>
+          <td>来自主文档</td>
+          <td><code>execCommand</code>、<code>createRange</code>、<code>hasFocus</code></td>
+      </tr>
+      <tr>
+          <td><strong>modifyProperties</strong></td>
+          <td>需要特殊处理</td>
+          <td><code>createElement</code>、<code>querySelector</code>、<code>getElementById</code></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="4-事件系统隔离">4. 事件系统隔离</h4>
+<p><strong>事件分类</strong> (<code>common.ts:158-190</code>)：</p>
+<ul>
+<li><strong>appWindowAddEventListenerEvents</strong>：由 iframe 处理（<code>hashchange</code>、<code>popstate</code>、<code>load</code>）</li>
+<li><strong>mainDocumentAddEventListenerEvents</strong>：由主文档处理（<code>keydown</code>、<code>wheel</code>）</li>
+<li><strong>mainAndAppAddEventListenerEvents</strong>：两者都处理（<code>gotpointercapture</code>）</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="nx">iframeWindow</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addEventListener</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">type</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">listener</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">options</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">appWindowAddEventListenerEvents</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="kr">type</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">rawWindowAddEventListener</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">iframeWindow</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">type</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">listener</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">options</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 其他事件默认使用主窗口
+</span></span></span><span class="line"><span class="cl">  <span class="nx">rawWindowAddEventListener</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">window</span><span class="p">.</span><span class="nx">__WUJIE_RAW_WINDOW__</span> <span class="o">||</span> <span class="nb">window</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">type</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">listener</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">options</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h3 id="javascript-隔离优势">JavaScript 隔离优势</h3>
+<p><strong>优点：</strong></p>
+<ul>
+<li><strong>完整上下文隔离</strong>：独立的 <code>window</code>、<code>document</code>、<code>history</code> 对象</li>
+<li><strong>原生安全模型</strong>：利用浏览器内置的 iframe 安全机制</li>
+<li><strong>内存隔离</strong>：每个子应用运行在独立的内存上下文中</li>
+<li><strong>无交叉污染</strong>：全局变量和原型链完全隔离</li>
+</ul>
+<p><strong>权衡：</strong></p>
+<ul>
+<li><strong>内存开销</strong>：每个子应用需要独立的 iframe 上下文</li>
+<li><strong>代理性能</strong>：额外的代理层引入轻微开销</li>
+<li><strong>调试复杂性</strong>：代理层会使调试变得复杂</li>
+</ul>
+<hr>
+<h2 id="css-隔离实现">CSS 隔离实现</h2>
+<h3 id="核心架构-1">核心架构</h3>
+<p>CSS 隔离通过 Web Components 和 Shadow DOM 实现，提供真正的样式封装，无需 CSS-in-JS 或作用域 CSS 解决方案。</p>
+<h4 id="关键文件-1">关键文件</h4>
+<table>
+  <thead>
+      <tr>
+          <th>文件</th>
+          <th>用途</th>
+          <th>大小</th>
+          <th>关键函数</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>shadow.ts</code></td>
+          <td>Shadow DOM 和 Web Components 逻辑</td>
+          <td>13KB</td>
+          <td><code>defineWujieWebComponent</code>、<code>renderTemplateToShadowRoot</code></td>
+      </tr>
+      <tr>
+          <td><code>effect.ts</code></td>
+          <td>样式处理和动态补丁</td>
+          <td>19KB</td>
+          <td><code>patchStylesheetElement</code>、<code>handleStylesheetElementPatch</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="实现机制-1">实现机制</h3>
+<h4 id="1-web-components--shadow-dom">1. Web Components + Shadow DOM</h4>
+<p><strong>自定义元素定义</strong> (<code>shadow.ts:39-58</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">WujieApp</span> <span class="kr">extends</span> <span class="nx">HTMLElement</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">connectedCallback</span><span class="p">()</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">shadowRoot</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">shadowRoot</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">attachShadow</span><span class="p">({</span> <span class="nx">mode</span><span class="o">:</span> <span class="s2">&#34;open&#34;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">sandbox</span> <span class="o">=</span> <span class="nx">getWujieById</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">WUJIE_APP_ID</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">sandbox</span><span class="p">.</span><span class="nx">shadowRoot</span> <span class="o">=</span> <span class="nx">shadowRoot</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">disconnectedCallback</span><span class="p">()</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">sandbox</span> <span class="o">=</span> <span class="nx">getWujieById</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">WUJIE_APP_ID</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">sandbox</span><span class="o">?</span><span class="p">.</span><span class="nx">unmount</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s2">&#34;wujie-app&#34;</span><span class="p">,</span> <span class="nx">WujieApp</span><span class="p">);</span>
+</span></span></code></pre></div><p><strong>Shadow DOM 结构：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">wujie-app</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  #shadow-root (open)
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="c">&lt;!-- 子应用样式 --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="c">&lt;!-- 子应用内容 --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">wujie-app</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h4 id="2-css-选择器转换">2. CSS 选择器转换</h4>
+<p><strong>根选择器映射</strong> (<code>shadow.ts:25-27</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">cssSelectorMap</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;:root&#34;</span><span class="o">:</span> <span class="s2">&#34;:host&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p><strong>样式处理管道</strong> (<code>shadow.ts:347-383</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">getPatchStyleElements</span><span class="p">(</span><span class="nx">rootStyleSheets</span>: <span class="kt">Array</span><span class="p">&lt;</span><span class="nt">CSSStyleSheet</span><span class="p">&gt;)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">rootCssRules</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">rootStyleReg</span> <span class="o">=</span> <span class="sr">/:root/g</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 将 :root 选择器转换为 :host 以兼容 Shadow DOM
+</span></span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">rootStyleSheets</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">cssRules</span> <span class="o">=</span> <span class="nx">rootStyleSheets</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">?</span><span class="p">.</span><span class="nx">cssRules</span> <span class="o">??</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">cssRules</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">cssRuleText</span> <span class="o">=</span> <span class="nx">cssRules</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">cssText</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">rootStyleReg</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">cssRuleText</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">rootCssRules</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">cssRuleText</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">rootStyleReg</span><span class="p">,</span> <span class="s2">&#34;:host&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">[</span><span class="nx">rootStyleSheetElement</span><span class="p">,</span> <span class="nx">fontStyleSheetElement</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="3-动态样式处理">3. 动态样式处理</h4>
+<p><strong>运行时样式注入</strong> (<code>effect.ts:196-268</code>)：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="k">case</span> <span class="s2">&#34;STYLE&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">stylesheetElement</span>: <span class="kt">HTMLStyleElement</span> <span class="o">=</span> <span class="nx">newChild</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">styleSheetElements</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">stylesheetElement</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">stylesheetElement</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">cssLoader</span> <span class="o">=</span> <span class="nx">getCssLoader</span><span class="p">({</span> <span class="nx">plugins</span><span class="p">,</span> <span class="nx">replace</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">content</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">stylesheetElement</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">cssLoader</span><span class="p">(</span><span class="nx">content</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nx">curUrl</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 应用样式补丁以兼容 Shadow DOM
+</span></span></span><span class="line"><span class="cl">  <span class="nx">patchStylesheetElement</span><span class="p">(</span><span class="nx">stylesheetElement</span><span class="p">,</span> <span class="nx">cssLoader</span><span class="p">,</span> <span class="nx">sandbox</span><span class="p">,</span> <span class="nx">curUrl</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">handleStylesheetElementPatch</span><span class="p">(</span><span class="nx">stylesheetElement</span><span class="p">,</span> <span class="nx">sandbox</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>样式元素补丁</strong> (<code>effect.ts:86-166</code>)：</p>
+<ul>
+<li>拦截 <code>innerHTML</code>、<code>innerText</code>、<code>textContent</code> 设置器</li>
+<li>通过插件系统处理 CSS</li>
+<li>处理 <code>:root</code> 到 <code>:host</code> 的转换</li>
+<li>管理主文档的 font-face 规则</li>
+</ul>
+<h4 id="4-插件系统集成">4. 插件系统集成</h4>
+<p><strong>CSS 转换管道：</strong></p>
+<ol>
+<li>插件预处理</li>
+<li>URL 解析和重写</li>
+<li>Shadow DOM 兼容性转换</li>
+<li>用户自定义转换</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">cssLoader</span> <span class="o">=</span> <span class="nx">getCssLoader</span><span class="p">({</span> <span class="nx">plugins</span><span class="p">,</span> <span class="nx">replace</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">stylesheetElement</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">cssLoader</span><span class="p">(</span><span class="nx">content</span><span class="p">,</span> <span class="nx">src</span><span class="p">,</span> <span class="nx">curUrl</span><span class="p">);</span>
+</span></span></code></pre></div><h3 id="css-隔离优势">CSS 隔离优势</h3>
+<p><strong>优点：</strong></p>
+<ul>
+<li><strong>真正的 CSS 隔离</strong>：Shadow DOM 提供原生样式封装</li>
+<li><strong>无样式冲突</strong>：样式无法泄漏进出 shadow 边界</li>
+<li><strong>动态支持</strong>：无缝处理运行时样式添加</li>
+<li><strong>插件扩展性</strong>：支持自定义 CSS 转换</li>
+</ul>
+<p><strong>权衡：</strong></p>
+<ul>
+<li><strong>浏览器支持</strong>：需要支持 Web Components 的现代浏览器</li>
+<li><strong>调试复杂性</strong>：Shadow DOM 样式更难检查</li>
+<li><strong>全局样式</strong>：某些全局样式（字体、CSS 变量）需要特殊处理</li>
+</ul>
+<hr>
+<h2 id="架构图表">架构图表</h2>
+<h3 id="整体框架架构">整体框架架构</h3>
+
+<div class="plantuml">
+  <pre><code>
+@startuml
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam componentStyle rectangle
+
+title 无界微前端框架 - 双重隔离架构
+
+package "主应用（宿主）" {
+  component [主应用容器] as MainApp
+  component [事件总线] as EventBus
+  component [路由器] as MainRouter
+}
+
+package "无界框架核心" {
+  component [无界沙箱] as WujieSandbox
+  component [代理系统] as ProxySystem
+  component [插件系统] as PluginSystem
+  component [生命周期管理器] as LifecycleManager
+}
+
+package "JavaScript 隔离层" {
+  component [iframe 沙箱] as IframeSandbox {
+    component [iframe Window] as IframeWindow
+    component [iframe Document] as IframeDocument
+    component [iframe History] as IframeHistory
+    component [iframe Location] as IframeLocation
+  }
+
+  component [Window 代理] as WindowProxy
+  component [Document 代理] as DocumentProxy
+  component [Location 代理] as LocationProxy
+}
+
+package "CSS 隔离层" {
+  component [Web Components] as WebComponents {
+    component [<wujie-app>] as WujieAppElement
+    component [Shadow DOM] as ShadowDOM {
+      component [Shadow HTML] as ShadowHTML
+      component [Shadow Head] as ShadowHead
+      component [Shadow Body] as ShadowBody
+    }
+  }
+
+  component [样式处理器] as StyleProcessor
+  component [CSS 加载器] as CSSLoader
+}
+
+package "子应用" {
+  component [子应用代码] as SubAppCode
+  component [子应用样式] as SubAppStyles
+  component [子应用资源] as SubAppAssets
+}
+
+' JavaScript 隔离连接
+MainApp --> WujieSandbox : 创建
+WujieSandbox --> IframeSandbox : 管理
+IframeSandbox --> WindowProxy : 暴露
+IframeSandbox --> DocumentProxy : 暴露
+IframeSandbox --> LocationProxy : 暴露
+
+WindowProxy --> IframeWindow : 代理到
+DocumentProxy --> IframeDocument : 代理到
+DocumentProxy --> ShadowDOM : 路由 DOM 操作
+LocationProxy --> IframeLocation : 代理到
+
+' CSS 隔离连接
+WujieSandbox --> WebComponents : 创建
+WebComponents --> WujieAppElement : 定义
+WujieAppElement --> ShadowDOM : 包含
+ShadowDOM --> ShadowHTML : 渲染
+ShadowHTML --> ShadowHead : 包含
+ShadowHTML --> ShadowBody : 包含
+
+StyleProcessor --> CSSLoader : 使用
+StyleProcessor --> ShadowHead : 注入样式
+SubAppStyles --> StyleProcessor : 被处理
+
+' 子应用集成
+SubAppCode --> WindowProxy : 在其中执行
+SubAppCode --> DocumentProxy : 通过其访问 DOM
+SubAppStyles --> StyleProcessor : 被加载
+SubAppAssets --> IframeSandbox : 在其中加载
+
+' 框架集成
+ProxySystem --> WindowProxy : 实现
+ProxySystem --> DocumentProxy : 实现
+ProxySystem --> LocationProxy : 实现
+
+PluginSystem --> CSSLoader : 配置
+PluginSystem --> StyleProcessor : 扩展
+
+LifecycleManager --> WujieSandbox : 控制
+LifecycleManager --> EventBus : 协调
+
+EventBus --> MainApp : 通知
+EventBus --> SubAppCode : 通信
+
+MainRouter --> LocationProxy : 同步
+
+note right of IframeSandbox
+  **JavaScript 隔离**
+  • 原生 iframe 上下文
+  • 独立的 window/document
+  • 内存隔离
+  • 事件隔离
+end note
+
+note right of ShadowDOM
+  **CSS 隔离**
+  • Shadow DOM 封装
+  • 样式作用域
+  • 无样式泄漏
+  • :root → :host 转换
+end note
+
+note bottom of ProxySystem
+  **属性分类**
+  • shadowProperties → Shadow DOM
+  • documentProperties → 主文档
+  • modifyProperties → 自定义逻辑
+  • 按类型路由事件
+end note
+
+legend right
+  |= 组件 |= 用途 |
+  | iframe 沙箱 | JavaScript 执行隔离 |
+  | Shadow DOM | CSS 样式隔离 |
+  | 代理系统 | API 拦截与路由 |
+  | Web Components | 容器与生命周期 |
+  | 插件系统 | 扩展性与定制化 |
+endlegend
+
+@enduml
+</code></pre>
+</div>
+
+<hr>
+<h2 id="高级特性">高级特性</h2>
+<h3 id="keep-alive-模式">Keep-Alive 模式</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// 启用 keep-alive 进行性能优化
+</span></span></span><span class="line"><span class="cl"><span class="nx">startApp</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;sub-app&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">url</span><span class="o">:</span> <span class="s2">&#34;https://sub-app.example.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">el</span><span class="o">:</span> <span class="s2">&#34;#container&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">alive</span>: <span class="kt">true</span><span class="p">,</span> <span class="c1">// 切换时保持子应用状态
+</span></span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p><strong>优势：</strong></p>
+<ul>
+<li>切换时保持子应用状态</li>
+<li>无需完全重新加载，重新激活更快</li>
+<li>频繁访问的应用用户体验更好</li>
+</ul>
+<h3 id="fiber-模式">Fiber 模式</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// 启用 fiber 模式以获得更好的性能
+</span></span></span><span class="line"><span class="cl"><span class="nx">startApp</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;sub-app&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">url</span><span class="o">:</span> <span class="s2">&#34;https://sub-app.example.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">el</span><span class="o">:</span> <span class="s2">&#34;#container&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">fiber</span>: <span class="kt">true</span><span class="p">,</span> <span class="c1">// 分块执行脚本
+</span></span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p><strong>优势：</strong></p>
+<ul>
+<li>分块执行脚本，防止主线程阻塞</li>
+<li>子应用加载期间响应性更好</li>
+<li>大型应用的用户体验改善</li>
+</ul>
+<h3 id="降级策略">降级策略</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// 对旧浏览器自动降级
+</span></span></span><span class="line"><span class="cl"><span class="nx">startApp</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;sub-app&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">url</span><span class="o">:</span> <span class="s2">&#34;https://sub-app.example.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">el</span><span class="o">:</span> <span class="s2">&#34;#container&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">degrade</span>: <span class="kt">true</span><span class="p">,</span> <span class="c1">// 回退到纯 iframe
+</span></span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p><strong>优雅降级：</strong></p>
+<ul>
+<li>自动检测 Web Components 支持</li>
+<li>Shadow DOM 不可用时回退到纯 iframe</li>
+<li>保持 JavaScript 隔离，禁用 CSS 隔离</li>
+<li>确保在旧版浏览器上的功能性</li>
+</ul>
+<hr>
+<h2 id="性能考虑">性能考虑</h2>
+<h3 id="内存使用">内存使用</h3>
+<p><strong>iframe 上下文开销：</strong></p>
+<ul>
+<li>每个子应用需要独立的 iframe 上下文（每个实例约 2-5MB）</li>
+<li>共享资源（字体、公共库）在上下文间重复</li>
+<li>垃圾回收在每个上下文中独立进行</li>
+</ul>
+<p><strong>优化策略：</strong></p>
+<ul>
+<li>对频繁访问的应用使用 keep-alive 模式</li>
+<li>为子应用实现懒加载</li>
+<li>考虑公共依赖的资源共享策略</li>
+</ul>
+<h3 id="运行时性能">运行时性能</h3>
+<p><strong>代理层影响：</strong></p>
+<ul>
+<li>大多数操作的最小开销（每次调用 &lt;1ms）</li>
+<li>属性访问路由增加轻微延迟</li>
+<li>事件处理需要分类查找</li>
+</ul>
+<p><strong>CSS 处理：</strong></p>
+<ul>
+<li>样式转换在注入时进行</li>
+<li>Shadow DOM 渲染是原生浏览器操作</li>
+<li>插件处理可能根据复杂性增加开销</li>
+</ul>
+<hr>
+<h2 id="最佳实践">最佳实践</h2>
+<h3 id="开发指南">开发指南</h3>
+<ol>
+<li>
+<p><strong>策略性使用 Keep-Alive</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// 对频繁切换的应用
+</span></span></span><span class="line"><span class="cl"><span class="nx">startApp</span><span class="p">({</span> <span class="nx">alive</span>: <span class="kt">true</span> <span class="p">});</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>配置插件系统</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// 自定义 CSS 转换
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">plugins</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">cssBeforeLoaders</span><span class="o">:</span> <span class="p">[{</span> <span class="nx">src</span><span class="o">:</span> <span class="s2">&#34;custom-theme.css&#34;</span> <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">cssAfterLoaders</span><span class="o">:</span> <span class="p">[{</span> <span class="nx">src</span><span class="o">:</span> <span class="s2">&#34;app-overrides.css&#34;</span> <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>处理跨应用通信</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// 使用事件总线进行通信
+</span></span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">bus</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;wujie&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 在主应用中
+</span></span></span><span class="line"><span class="cl"><span class="nx">bus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s2">&#34;user-login&#34;</span><span class="p">,</span> <span class="nx">handleUserLogin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 在子应用中
+</span></span></span><span class="line"><span class="cl"><span class="nx">bus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s2">&#34;user-login&#34;</span><span class="p">,</span> <span class="nx">userData</span><span class="p">);</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>资源优化</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// 预加载子应用
+</span></span></span><span class="line"><span class="cl"><span class="nx">preloadApp</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;sub-app&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">url</span><span class="o">:</span> <span class="s2">&#34;https://sub-app.example.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="生产部署">生产部署</h3>
+<ol>
+<li>
+<p><strong>浏览器兼容性</strong></p>
+<ul>
+<li>在目标浏览器上测试降级模式</li>
+<li>如需要，为 IE11 提供回退方案</li>
+<li>监控 Web Components 支持指标</li>
+</ul>
+</li>
+<li>
+<p><strong>性能监控</strong></p>
+<ul>
+<li>跟踪子应用加载时间</li>
+<li>监控内存使用模式</li>
+<li>为隔离失败设置错误跟踪</li>
+</ul>
+</li>
+<li>
+<p><strong>安全考虑</strong></p>
+<ul>
+<li>验证子应用来源</li>
+<li>实施 CSP 策略</li>
+<li>监控 XSS 漏洞</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="与其他解决方案的比较">与其他解决方案的比较</h2>
+<h3 id="vs-qiankun">vs. qiankun</h3>
+<table>
+  <thead>
+      <tr>
+          <th>方面</th>
+          <th>无界</th>
+          <th>qiankun</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>JS 隔离</strong></td>
+          <td>iframe 沙箱</td>
+          <td>Proxy 沙箱</td>
+      </tr>
+      <tr>
+          <td><strong>CSS 隔离</strong></td>
+          <td>Shadow DOM</td>
+          <td>动态 CSS</td>
+      </tr>
+      <tr>
+          <td><strong>浏览器支持</strong></td>
+          <td>现代浏览器（IE11 可降级）</td>
+          <td>更广泛支持</td>
+      </tr>
+      <tr>
+          <td><strong>性能</strong></td>
+          <td>更好（原生隔离）</td>
+          <td>良好</td>
+      </tr>
+      <tr>
+          <td><strong>调试</strong></td>
+          <td>更复杂</td>
+          <td>更容易</td>
+      </tr>
+      <tr>
+          <td><strong>内存使用</strong></td>
+          <td>更高</td>
+          <td>更低</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="vs-single-spa">vs. single-spa</h3>
+<table>
+  <thead>
+      <tr>
+          <th>方面</th>
+          <th>无界</th>
+          <th>single-spa</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>隔离</strong></td>
+          <td>完全隔离</td>
+          <td>共享上下文</td>
+      </tr>
+      <tr>
+          <td><strong>设置复杂性</strong></td>
+          <td>较低</td>
+          <td>较高</td>
+      </tr>
+      <tr>
+          <td><strong>框架耦合</strong></td>
+          <td>松散</td>
+          <td>紧密</td>
+      </tr>
+      <tr>
+          <td><strong>CSS 冲突</strong></td>
+          <td>无</td>
+          <td>手动处理</td>
+      </tr>
+      <tr>
+          <td><strong>学习曲线</strong></td>
+          <td>平缓</td>
+          <td>陡峭</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="限制和考虑因素">限制和考虑因素</h2>
+<h3 id="技术限制">技术限制</h3>
+<ol>
+<li>
+<p><strong>浏览器要求</strong></p>
+<ul>
+<li>完整功能需要 Web Components 支持</li>
+<li>依赖 Shadow DOM v1 API</li>
+<li>现代 JavaScript 特性（Proxy 等）</li>
+</ul>
+</li>
+<li>
+<p><strong>内存开销</strong></p>
+<ul>
+<li>每个子应用需要独立的 iframe 上下文</li>
+<li>如果管理不当可能出现内存泄漏</li>
+<li>跨上下文的资源重复</li>
+</ul>
+</li>
+<li>
+<p><strong>调试挑战</strong></p>
+<ul>
+<li>Shadow DOM 样式更难检查</li>
+<li>代理层使堆栈跟踪复杂化</li>
+<li>跨上下文调试复杂性</li>
+</ul>
+</li>
+</ol>
+<h3 id="架构考虑">架构考虑</h3>
+<ol>
+<li>
+<p><strong>URL 同步</strong></p>
+<ul>
+<li>主应用和子应用间复杂的 URL 处理</li>
+<li>History API 同步挑战</li>
+<li>深链接复杂性</li>
+</ul>
+</li>
+<li>
+<p><strong>全局状态管理</strong></p>
+<ul>
+<li>隔离上下文使共享状态复杂化</li>
+<li>跨应用通信需要事件总线</li>
+<li>状态同步开销</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="结论">结论</h2>
+<p>无界代表了微前端架构的一种成熟方法，利用原生浏览器安全机制实现强大的隔离。将基于 iframe 的 JavaScript 隔离与基于 Shadow DOM 的 CSS 隔离相结合的双重隔离策略提供了：</p>
+<h3 id="主要优势">主要优势</h3>
+<ol>
+<li><strong>完全隔离</strong>：JavaScript 和 CSS 都被严格分离</li>
+<li><strong>原生性能</strong>：利用浏览器内置 API，无需重型 polyfill</li>
+<li><strong>低适配成本</strong>：现有应用需要的修改最少</li>
+<li><strong>生产就绪</strong>：成熟的实现，具备全面的测试</li>
+</ol>
+<h3 id="理想用例">理想用例</h3>
+<ul>
+<li><strong>大型企业应用</strong>：严格隔离至关重要的场景</li>
+<li><strong>多团队开发</strong>：团队可以独立工作而不发生冲突</li>
+<li><strong>遗留系统集成</strong>：逐步将单体架构迁移到微前端</li>
+<li><strong>第三方小组件集成</strong>：安全嵌入外部应用</li>
+</ul>
+<h3 id="未来考虑">未来考虑</h3>
+<ul>
+<li><strong>WebAssembly 集成</strong>：潜在的更好性能隔离</li>
+<li><strong>Service Worker 增强</strong>：改进的资源共享策略</li>
+<li><strong>标准演进</strong>：适应新兴 Web 标准</li>
+</ul>
+<p>无界展示了深思熟虑的架构设计如何创建一个平衡隔离、性能和开发者体验的微前端解决方案。</p>
+<hr>
+<p><strong>分析完成者：</strong> Claude Code
+<strong>分析框架：</strong> 无界 v1.0.29
+<strong>分析重点：</strong> JavaScript 与 CSS 隔离机制
+<strong>最后更新：</strong> 2026-01-13</p>
+</div></div></div>
+            </main></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="css/custom.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
