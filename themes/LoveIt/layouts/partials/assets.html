@@ -43,6 +43,7 @@
 
 {{- /* lightgallery */ -}}
 {{- if $params.lightgallery -}}
+    {{- $config = dict "lightgallery" true | merge $config -}}
     {{- $source := $cdn.lightgalleryCSS | default "lib/lightgallery/css/lightgallery-bundle.min.css" -}}
     {{- dict "Source" $source "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/style.html" -}}
     {{- $source := $cdn.lightgalleryJS | default "lib/lightgallery/lightgallery.min.js" -}}
@@ -51,7 +52,6 @@
     {{- dict "Source" $source "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
     {{- $source := $cdn.lightgalleryZoomJS | default "lib/lightgallery/plugins/zoom/lg-zoom.min.js" -}}
     {{- dict "Source" $source "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
-    {{- $config = dict "lightgallery" true | merge $config -}}
     {{- $_ := (resources.Get "lib/lightgallery/images/loading.gif").RelPermalink -}}
 {{- end -}}
 

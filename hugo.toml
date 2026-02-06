@@ -343,6 +343,7 @@ languageName = "English"
         # located in "assets/" 
         # Or 
         # someJavascript = "https://cdn.example.com/some.js"
+        plantumlPako = "lib/plantuml/pako.min.js"
     # Page SEO config
     [params.page.seo]
       # image URL

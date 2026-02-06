@@ -600,6 +600,78 @@ class Theme {
     this._mermaidOnSwitchTheme();
   }
 
+  encodePlantuml6bit(b) {
+    if (b < 10) return String.fromCharCode(48 + b);
+    b -= 10;
+    if (b < 26) return String.fromCharCode(65 + b);
+    b -= 26;
+    if (b < 26) return String.fromCharCode(97 + b);
+    b -= 26;
+    if (b === 0) return '-';
+    if (b === 1) return '_';
+    return '?';
+  }
+
+  encodePlantuml3bytes(b1, b2, b3) {
+    const c1 = b1 >> 2 & 0x3F;
+    const c2 = (b1 & 0x3) << 4 | b2 >> 4 & 0xF;
+    const c3 = (b2 & 0xF) << 2 | b3 >> 6 & 0x3;
+    const c4 = b3 & 0x3F;
+    return '' + this.encodePlantuml6bit(c1) + this.encodePlantuml6bit(c2) + this.encodePlantuml6bit(c3) + this.encodePlantuml6bit(c4);
+  }
+
+  encodePlantuml(data) {
+    const compressed = window.pako.deflateRaw(data, { level: 9 });
+    let result = '';
+    for (let i = 0; i < compressed.length; i += 3) {
+      if (i + 2 === compressed.length) {
+        result += this.encodePlantuml3bytes(compressed[i], compressed[i + 1], 0);
+      } else if (i + 1 === compressed.length) {
+        result += this.encodePlantuml3bytes(compressed[i], 0, 0);
+      } else {
+        result += this.encodePlantuml3bytes(compressed[i], compressed[i + 1], compressed[i + 2]);
+      }
+    }
+    return result;
+  }
+
+  initPlantuml() {
+    const selectors = ['pre > code.language-plantuml', 'pre > code.lang-plantuml', 'pre > code.language-uml', 'pre > code.lang-uml', 'pre > code.language-puml', 'pre > code.lang-puml', '.plantuml > pre > code', '.plantuml > code'];
+    const $plantumlCodes = document.querySelectorAll(selectors.join(','));
+    if (!$plantumlCodes.length) return;
+    if (!window.pako || !window.pako.deflate || !window.TextEncoder) {
+      console.warn('PlantUML requires TextEncoder and pako to render.');
+      return;
+    }
+    const server = 'https://www.plantuml.com/plantuml/svg/';
+    this.util.forEach($plantumlCodes, $code => {
+      if ($code.dataset.plantumlRendered) return;
+      const source = $code.textContent.trim();
+      if (!source) return;
+      const encoded = this.encodePlantuml(new TextEncoder().encode(source));
+      const $img = document.createElement('img');
+      $img.className = 'plantuml-diagram';
+      $img.alt = 'PlantUML diagram';
+      $img.loading = 'lazy';
+      $img.decoding = 'async';
+      $img.src = server + encoded;
+      $img.style.display = 'block';
+      $img.style.margin = '0 auto';
+      $img.style.maxWidth = '100%';
+      $img.style.height = 'auto';
+      const $container = document.createElement('div');
+      $container.className = 'plantuml-rendered';
+      $container.appendChild($img);
+      const $wrapper = $code.closest('.plantuml') || $code.closest('.highlight') || $code.closest('pre');
+      if ($wrapper && $wrapper.parentElement) {
+        $wrapper.parentElement.replaceChild($container, $wrapper);
+      } else if ($code.parentElement) {
+        $code.parentElement.replaceChild($container, $code);
+      }
+      $code.dataset.plantumlRendered = 'true';
+    });
+  }
+
   initEcharts() {
     if (this.config.echarts) {
       echarts.registerTheme('light', this.config.echarts.lightTheme);
@@ -878,6 +950,7 @@ class Theme {
       this.initHeaderLink();
       this.initMath();
       this.initMermaid();
+      this.initPlantuml();
       this.initEcharts();
       this.initTypeit();
       this.initMapbox();
