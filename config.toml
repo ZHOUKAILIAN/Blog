@@ -147,7 +147,7 @@
       typeit = false
       # whether to show social links
       # disclaimer (HTML format is supported)
-      disclaimer = "<div><div class=\"mb-3\">💻 前端打工人 | 🛡️ ISFJ-A 守护者</div><div class=\"mb-3\">📅 入行 1 年 | ⏳ 偶尔卡 bug 式纠结</div><div class=\"mb-3\">🗣️ 聊天容易掉线 | 🌀 DFS 式追问狂魔</div></div>"
+      disclaimer = "<div><div class=\"mb-3\">💻 前端打工人 | 🛡️ ISFJ-A 守护者</div><div class=\"mb-3\">📅 入行 2 年 | ⏳ 偶尔卡 bug 式纠结</div><div class=\"mb-3\">🗣️ 聊天容易掉线 | 🌀 DFS 式追问狂魔</div></div>"
             social = true
 
     # Home page posts
@@ -328,6 +328,7 @@
         # located in "assets/" 
         # Or 
         # someJavascript = "https://cdn.example.com/some.js"
+        plantumlPako = "lib/plantuml/pako.min.js"
     # Page SEO config
     [params.page.seo]
       # image URL
