@@ -422,3 +422,9 @@ languageName = "English"
   [markup.highlight]
     # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
     noClasses = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      # Allow inline HTML like <br/> and &nbsp; in Markdown.
+      unsafe = true
+      # Treat single line breaks as hard line breaks.
+      hardWraps = true

@@ -8,3 +8,8 @@ body [theme=dark] .plantuml-lightbox,
 body .plantuml-lightbox {
   cursor: zoom-in;
 }
+
+/* Indent the first line of each top-level paragraph in posts. */
+.single .content > p {
+  text-indent: 2em;
+}
