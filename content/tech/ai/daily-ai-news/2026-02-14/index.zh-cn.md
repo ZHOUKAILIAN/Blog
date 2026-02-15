@@ -1,0 +1,62 @@
+---
+weight: 1
+title: "AI日报 2026-02-14"
+date: 2026-02-14
+lastmod: 2026-02-14
+draft: false
+author: "ZHOUKAILIAN"
+description: "模型与应用两端持续升温，政策、资本与产业叙事共同推高AI讨论热度。"
+images: []
+tags: ["AI", "News", "Daily"]
+categories: ["ai"]
+lightgallery: true
+---
+
+# AI日报 2026-02-14
+
+## 概览
+- 头部公司与模型迭代继续高频发布，亚洲市场成为近期焦点之一。
+- 政策与资本市场开始主动介入，AI相关资产与舆情波动明显。
+- 应用侧从产业到消费场景扩散，社会议题关注度上升。
+
+## 今日关注（前10条）
+
+1) **英伟达CEO将缺席印度AI峰会**（Reuters）
+- 来源：https://news.google.com/rss/articles/CBMitgFBVV95cUxOUHhCQlpSbEZfbjhucVgtMEpSUFJwNmVabklEdmRRVXJ5eUFDb0tXSXRMal9xRkwxOHlDb1NHMkczUjlCNTJzWnZRRGVZSEQ0VFN2Zm1zUG9fNUJLMEQtemhnTGIzX1llczl0X0pnVktTOEFEMFgxbnBCeW1VVnh0aHBCWEZ2ZGcxaWhBLVBSRDdvdEVUTTBhbDdEUy1ldzRzNXBBRlg4MUJqR2paQ2ZyY1dxSHB2dw?oc=5
+- 解读：头部芯片厂商的公开行程变化反映峰会与区域合作的不确定性，也折射出AI基础设施议题的战略性。
+
+2) **字节跳动发布“豆包2.0”，强调Agent时代**（Reuters）
+- 来源：https://news.google.com/rss/articles/CBMiowFBVV95cUxPMzBOZ3BLUmZHME1qWWVWSlFjTlZFX1N5SEdCX1VlOFRrTlUtZFQ3NlN4ZWsyV3JETUhYMUlKYjFCSVpzT3Q0OXpTcC1WVHJIcHNvSzAtcmlQTE5yS1VUOFNzYVJMN01VZTNGRkNTc05ySW9rbnF6S3ZDVDloSTFuRXRlLUVtejdJV1ZJQk1jNW4tQmJfN0NsNm1MeWJqTXp4RkJJ?oc=5
+- 解读：模型迭代向“可执行代理”方向演进，意味着企业侧更关注任务闭环与工具化能力，而不止文本生成。
+
+3) **中国AI模型春节热度延续**（Reuters）
+- 来源：https://news.google.com/rss/articles/CBMitgFBVV95cUxOcWFnTGVzUjFsemd3SjlXb3dnOTZyQm85cHVscndzejlzOFNGdW5aY2FUWlBIME9VV3NVMDEzb2hXSjFHQmNpa2plRF9aWFFoVjI4SjkzVm1mcm1MVVV1Y0FFTWpzdlR5bGo0Qko3YjA5S1JyTFJSUkZadVVwMkN3dmJ5SjRPQklSaXJQTlNGc2NtRXRPODcxUS10TDh2eGE2dDVCbGx1X3gxWTRmdUJ6S0FCSGI2QQ?oc=5
+- 解读：节日期间高频曝光显示AI叙事已从产业层面外溢到大众舆论，品牌与渠道的心智争夺更加激烈。
+
+4) **AI电影学院培养好莱坞新一代创作者**（Reuters）
+- 来源：https://news.google.com/rss/articles/CBMiugFBVV95cUxPNThsbDBwY2dnckYteUpyeFRSZVJLUUtjNVRwWGpOYi1NbVFORk1jMUUxOC1IU09WQVVWNzRXb1k0Y1BmUHlVa2RBZFN6UmtSTTA1UDMybmgzWEdQeTY2THpaaWxBcDlmYUpTQW1GNFJ4SmxtY3o1T213RWlYSzNOQjVJbjVyZnRzNFNUVFUzdTBmSU5Bd0hnaDZKWnFXZTRUV296b2l4MURjM0QtTmxLUVV1M2o5QndfaEE?oc=5
+- 解读：创作教育与行业流程开始被AI重塑，内容产业正向“人机协作”生产方式过渡。
+
+5) **中国“国家队”介入抑制AI概念股过热**（WSJ）
+- 来源：https://news.google.com/rss/articles/CBMivgNBVV95cUxPMzgzTUk2X3Y1WWlJQ0VlZVVVN1JUOENjb2FGS2duLWhWbUExSzhGcFFnOWo2ZHoydmx2RW1QcHVHS0JOczZHUTN0VUQteFpURFl0NW1ONnhzWjFteU83ZjdYb0FHMm80OUd6UDRBZHFpaEFFSzJDeTBOVGJVZ0IwSXNudy1pbURkQmxSSzBQcTI5d2c2Sy14bENZM2lMd2E5cWh6X2RsVi1NeERvQlk1dmt4Q05JeEt5TE5rREphcDhmRWQ2Q0FGSWdMOWswNXRDMnBVM0RKU0lmM2lONzl6RWQ5Nlc2OHdLOFZXM2Fib1V3Z3BkdUdaWEszaWZMQWVjbWpBMWV2bk00TG1aWFBzLVFLQWZUMjN4eHFFeFprVzBUYm5wUS0wU2xBU2dfc1ZRam9zZ2lDN3c3T2lmMS1iRm1IUFUyV3hDOVFNLUdWd3pKVHl2a1hEZXo2aXN2VFY4Z0w1Y3hNYkZmamVGeWNnRTljbHBEdm5RQ2NWYWRpcUhOMWNGM3hfUU1WTTBhWUstS2I3T3hQRE1rMmc0eWNYR2xRbGlSNnFwNmV2aEtBV0RYeVBTUndzcTJrX29vZw?oc=5
+- 解读：政策层面对AI资产泡沫的敏感度上升，市场将从“主题炒作”向“盈利与落地”再平衡。
+
+6) **美军行动使用Anthropic Claude引发关注**（WSJ）
+- 来源：https://news.google.com/rss/articles/CBMitwNBVV95cUxOZmlxdXFVSV80Q2czNXJnOV9aQmtvZ1VOc0NVeXhCc1F3aUVQc0wwQVprSDRhai1JSGVDQnFuc0V5a1ZNQ0JCcjFmTmlzTHl1NGxvR0Vmd0V6QTJmanNVdzJ0UHZ4dHV1RXkxNFdoMUxhYWJjVnBicUw0anBvRG9GRmQ4OFFCcnJQdmNVZnllVU1PaTIxNVY2dEZjNlBzXzY1cDJCbV9TZWhBdVNCbWFJTHd5YXRYb2pXTzZBakFKcnpsZkFEWXdmM3FYa05uSm1vU1lCVzQwWUhUSjRrNHdrOWJXX1BuMjJOOWxzRDNmMExnTXBOY3VIOVhHTlZLYnFfYnBzQzNYdUYwTkQzVlVJX0dWMThJWjNDcm1aQjFQbjZjOFpuN2h2ZUJEYlZNRzcwMjN2Z0hzR2NBck5TdURJU0Z3bXhMQ1NoLTY2NDBtS0dTYWJROTZfTS0xRlRlOVRGbzloMGZjaXdLRTdTS3F0REw1ekdGeFZNa2hsdmM1VjZPWWhSWjJjRFpKTnljcmVoWDZDNEZiOHJ5d1J3RlI2RDU1QUhvUWZKalZzckxmSS1VMjQzQ3c4?oc=5
+- 解读：模型在军事与情报场景的应用引发合规与伦理争议，AI安全治理压力进一步上升。
+
+7) **中国多家AI模型发布后出现“高峰后调整”**（CNBC）
+- 来源：https://news.google.com/rss/articles/CBMinwFBVV95cUxObFFiaWg0c1d2eWNQaV9MMmJNbFBDS2hINFVqZTlTMDVhMzVFVllwcHFWN1ZpMTdlMXdRQmdraGFTUkJCTkIzYUZTT1lob1N4T05xaTNPWjNIUVpZLWdzUldod2RLU1A1WmE2cHRJUTJJQ0VsTTktUXFoeG51dVlpQmIwMDZ3VUlLVV9mb2V2MFNFcUc3TUhVLTlyMEx2S1HSAaQBQVVfeXFMT0xHZVZCQnp6ak1WamxqWmlROUxua3BWSDJTb1l1U3JxQ2xQTUZZSXBLMEtVS1phYVhoNjJ5VlNmbnZWdE9FSVRhTXA4Sm5tSjJhdGM0LU1DM01SOFptQ2JLa2djTW9SVXdETFpWSTVuYkhrU04tUjRWcEN6YlBXRDVSellHTWo2LVRVbWVNd3hJLXhJa3NydEY1RG1HNGFVTXJGU3Q?oc=5
+- 解读：密集发布后市场更关注产品稳定性与商业化路径，模型质量与生态建设成为关键分化点。
+
+8) **“我们现在是AI公司”的商业叙事扩散**（NYT）
+- 来源：https://news.google.com/rss/articles/CBMihgFBVV95cUxOazRBZWFkZDRHNWFodVF4WjNvd0RYSVVER1ZjTzdxazJZbUJlRzFOVmRySGxTZXROY0NkMUppT3V3M3IyRDUyQ2NpNXZma0ZnMHdxbVhxQkZxQWNLeExOcW5hcnRXLVVEQ0lRRWRMdjJ6LURnT21hdmJ0c2t0eWVHc2plUUQ0Zw?oc=5
+- 解读：传统软件公司持续重塑品牌定位，AI转型已成为资本与客户预期的“必答题”。
+
+9) **Meta考虑在智能眼镜加入人脸识别**（NYT）
+- 来源：https://news.google.com/rss/articles/CBMikgFBVV95cUxNU3lQQXZRMkZrbzQ0SmpRRENfN0lTUml0ZmFVMmRvUkZmM1lmdjBTV2ZTRFN5RzczNG9KU3hmck5pcFZvUlM1VllOM0RxN0ZwTUxLTEZFZGVWWVQycGF4Z0QycDhkTG5FaVVUcHlILUhVSVpZVjhvRG9TSExCSTFwbTMtVjlneHJvWjhxUHdscFhtdw?oc=5
+- 解读：可穿戴设备与计算机视觉进一步融合，但隐私与监管红线将决定产品商业化节奏。
+
+10) **AI陪伴体验成为社会文化话题**（CNN）
+- 来源：https://news.google.com/rss/articles/CBMimgFBVV95cUxNMFBwVnlaV0VBWnhYbElQaXpiNlA4WGp1b1hOWVpDYms2S195YnlERERzUkE0RGFieHpoOTRNbGZxc2lzUmkyMGdkUWVpNXFRenV1dXFLNlh3bXltWkd0TEpfcnpyUERmRzBnNFU2d09PVGthZU5MMUhlUXl1OEhqUThJS0pSa0ZVSnY2MWFHRG00ZW9EVEVCSF9R?oc=5
+- 解读：AI陪伴类产品从技术话题走向社会议题，伦理边界与商业模式仍在探索。
