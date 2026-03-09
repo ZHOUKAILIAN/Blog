@@ -74,3 +74,38 @@ lightgallery: true
 
 ## 一句话总结
 AI进入“产业控制力”竞争阶段：谁能同时拿下政策适配、算力供给和业务入口，谁就更接近下一轮长期优势。
+
+## 前沿 IDE / CLI Changelog（Step 2 补充）
+
+### Claude Code（2.1.71）
+- 新增 `/loop` 周期任务命令，可在会话内按间隔重复执行提示词/命令。
+- 新增会话级 cron 调度工具。
+- 新增 `voice:pushToTalk` 可重绑定快捷键。
+- 修复长会话 stdin 卡死、启动冻结、`/fork` 计划文件串扰、插件安装丢失等稳定性问题。
+
+### Codex CLI（0.112.0 / 0.113.0-alpha.1）
+- 新增 `@plugin` 直连提及，自动注入相关 MCP/Skill 上下文。
+- 更新 TUI 模型选择流程，提升最新模型目录可见性。
+- 优化沙箱策略（zsh-fork 执行权限策略并入 per-turn policy）。
+- 修复 JS REPL 状态保持、SIGTERM 优雅退出、Linux/macOS 沙箱隔离一致性等问题。
+
+### Cursor（03-05-26）
+- 新增 Automations：支持定时与事件触发（Slack/Linear/GitHub/PagerDuty/Webhook）。
+- 支持云端 Agent 沙箱执行并接入记忆能力。
+- 与 03-04-26 版本联动，JetBrains 系列 IDE（IntelliJ/PyCharm/WebStorm）已可通过 ACP 接入。
+
+### OpenCode（v1.2.22）
+- 修复 TUI 中 MCP 开关异常与 TTY 双清理导致的终端损坏。
+- 增加 `OPENCODE_SKIP_MIGRATIONS` 以跳过数据库迁移。
+- 优化桌面端会话缓存、消息加载与 UI 抖动问题。
+
+## Frontier Model Changelog（Step 2 补充）
+- OpenAI：
+  - 2026-02-10 更新 GPT-5.2 Instant（风格更稳健、答复相关性提升）。
+  - 2026-02-05 发布 GPT-5.3-Codex（Codex + GPT-5 训练栈融合，主打 agentic coding）。
+- Anthropic：
+  - 2026-03-05 发布《Where things stand with the Department of War》官方声明（政策/合作边界更新）。
+- xAI：
+  - 2026-02-02 公布 xAI joins SpaceX。
+  - 2026-01-28 发布 Grok Imagine API。
+- Google Gemini：no_updates（已拉取 Google AI 官方入口页，未检索到过去 24h 内明确模型发布条目）。
