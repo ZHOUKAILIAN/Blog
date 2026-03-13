@@ -13,102 +13,56 @@ lightgallery: true
 ---
 
 AI 日报
-# AI日报 2026-03-11
+# AI + Web3 情报日报 [2026-03-13] | 共7条
 
-## 今日总览
-- 今天的核心判断：**模型层面进入“发布后消化期”，工具层面进入“高频工程化迭代期”**。
-- 在可验证公开源中，OpenAI 本周（3/5）发布 GPT-5.4/5.4 Pro 仍是当前最强信号；Cursor、Claude Code、Codex、OpenCode 在近 24~72 小时继续围绕自动化、权限与稳定性迭代。
-- 对团队落地的现实意义：从“用上 AI”转为“让 AI 可靠跑在流程里”。
+━━━━━━━━━━━━━━━━━━━━━━
 
-## 关键新闻与来源
+## 🔴 AI不再“扩编”，开始“换编制”
+Atlassian 宣布裁员约 **10%（约1600人）**，官方口径是把资金从部分岗位转向 AI 与企业销售；这不是孤例，和 2 月 Block 的大规模裁员叙事形成呼应。信号很直接：不少软件公司开始把“AI 投入强度”放在“人力扩张”之前。  
+**为什么看这条：** 如果你在做团队规划，2026 年一个现实课题是“先做 AI 产能替代，再决定是否补 HC”。  
+**[TechCrunch]**
 
-1) **OpenAI API：GPT-5.4 与 GPT-5.4 Pro 进入 API 主线能力集**
-- 来源：OpenAI API Changelog（2026-03-05）
-- 链接：https://developers.openai.com/api/docs/changelog
-- 要点：发布 GPT-5.4 / GPT-5.4-pro；上线 Tool search、Computer use、1M context window 与 compaction。
-- 解读：这组能力组合标志着 Agent 从“问答增强”向“任务执行与长流程编排”全面迁移。
+━━━━━━━━━━━━━━━━━━━━━━
 
-2) **Cursor：Automations 与 JetBrains ACP 扩张了 Agent 的触达面**
-- 来源：Cursor Changelog（03-04/03-05）
-- 链接：https://cursor.com/changelog
-- 要点：Automations 支持定时/事件触发（Slack/Linear/GitHub/PagerDuty/Webhook）；并宣布可在 JetBrains IDE 体系接入 Cursor ACP。
-- 解读：Cursor 正在从“编辑器能力”走向“组织级自动化节点”。
+## 🔴 AI+Crypto 板块被“基础设施预期”点燃
+CoinDesk 报道显示，受英伟达将推开源 AI Agent 平台消息刺激，AI 概念代币板块单日约涨 **4.8%**，总市值到 **约141.7亿美元**，跑赢大盘（CoinDesk 20 同期约 **+2.86%**）。这类行情本质是“算力/平台路线图”对二级市场估值预期的快速传导。  
+**为什么看这条：** 做 Web3 叙事交易时，短线 alpha 往往来自“基础设施发布节奏”，而不只是链上数据本身。  
+**[CoinDesk（并交叉参考 WIRED）]**
 
-3) **Claude Code v2.1.72：继续强化长会话稳定性与权限策略**
-- 来源：Claude Code Releases
-- 链接：https://github.com/anthropics/claude-code/releases
-- 要点：新增 `CLAUDE_CODE_DISABLE_CRON`；/plan、/config、权限匹配、并行工具调用、语音与会话恢复等大量细节修复。
-- 解读：方向清晰——提高可持续运行能力，降低生产中断与误提示成本。
+━━━━━━━━━━━━━━━━━━━━━━
 
-4) **Codex 0.114.0：实验能力与权限流继续前推**
-- 来源：openai/codex Releases
-- 链接：https://github.com/openai/codex/releases
-- 要点：新增实验 code mode、hooks engine 起步、app-server 健康检查端点、系统 skill 全局禁用开关、权限持久化与恢复修复。
-- 解读：重点从“单次完成率”转向“多回合、多会话、可治理的执行体验”。
+## 🔴 法律AI融资继续放大：Legora 再拿5.5亿美元
+Reuters 报道，瑞典法律 AI 公司 Legora 完成 **5.5亿美元 D 轮**，估值 **55.5亿美元**；公司还披露计划到 2026 年底把美国团队扩展到 **300+ 人**。从“试点”到“嵌入核心流程”的 adoption 速度，是这轮融资最关键的判断依据。  
+**为什么看这条：** 如果你做 B2B AI，投资人现在更看“能否进核心工作流”，而不是只看模型炫技。  
+**[Reuters]**
 
-5) **OpenCode（opencode.ai）继续高频交付工作区与兼容性修复**
-- 来源：OpenCode Changelog
-- 链接：https://opencode.ai/changelog
-- 要点：TUI 引入 workspace 初始支持；增加 Copilot GPT-5.4 xhigh 支持；桌面端在滚动、会话状态、权限提示等方面大量修补。
-- 解读：开源/社区路线继续用高迭代速度抢占“终端+桌面混合”开发场景。
+━━━━━━━━━━━━━━━━━━━━━━
 
-6) **Anthropic News：近期新增以政策/立场声明与 Sonnet 4.6 产品发布并行**
-- 来源：Anthropic Newsroom
-- 链接：https://www.anthropic.com/news
-- 要点：2/17 发布 Claude Sonnet 4.6；3/5 等条目为政策与对外声明更新。
-- 解读：产品与政策叙事并进，显示其在商业化扩展外也在强化公共议题定位。
+## 🟡 大模型安全边界，开始进入法律硬博弈
+超过 30 名来自 OpenAI 与 Google DeepMind 的员工提交法律文件，支持 Anthropic 起诉美国国防部相关标签决定。争议焦点是：模型供应方能否对使用场景（如大规模监控、武器化）设置并坚持技术/合同红线。  
+**为什么看这条：** 做 Agent 或政企项目时，合同条款+能力开关会越来越像“产品功能”，不是法务附件。  
+**[TechCrunch]**
 
-## 综合结论
-1. **短期（本周）**：模型大版本节奏放缓，但“工具能力 + 上下文管理 + 执行接口”进入收敛。  
-2. **中期（本月）**：IDE/CLI 厂商竞争焦点将集中在自动化编排、跨平台接入、权限审计与稳定性。  
-3. **落地建议**：团队应优先构建“任务分级、审批策略、失败重试、运行日志”四件套，否则自动化收益会被运维摩擦抵消。
+━━━━━━━━━━━━━━━━━━━━━━
 
-## 详细 changelog
+## 🟡 “遥感+多模态AI”在产业侧继续融资
+36氪报道，觅熵科技完成 Pre-A，金额 **超千万元人民币**，定位是把卫星遥感、AIS/ADS-B 等多源数据做 AI 解译并以 SaaS 方式输出行业情报。该方向把“看见数据”升级到“解释含义并可决策”。  
+**为什么看这条：** 如果你关注 AI 垂直落地，真正有付费意愿的常常是“高价值稀缺数据 + 可执行结论”组合。  
+**[36氪]**
 
-### Claude Code
-- 追踪状态：**有更新**
-- 最新观测版本：`v2.1.72`
-- 关键变更：
-  - 新增 `CLAUDE_CODE_DISABLE_CRON`，支持会话内计划任务快速停用。
-  - `/plan` 支持携带描述直接启动，减少多一步交互。
-  - 权限匹配、并行工具调用、缓存与长会话退出等多个稳定性问题修复。
-- 来源：https://github.com/anthropics/claude-code/releases
+━━━━━━━━━━━━━━━━━━━━━━
 
-### Codex
-- 追踪状态：**有更新**
-- 最新观测版本：`0.114.0`（另见 `0.115.0-alpha.1` 预发布）
-- 关键变更：
-  - 实验 `code mode` 与 hooks 引擎雏形。
-  - app-server 增加 `/readyz` `/healthz`，利于运维探针接入。
-  - 权限申请跨 turn 持久化、恢复与兼容性修复。
-- 来源：https://github.com/openai/codex/releases
+## 🟢 速览
+- Mozilla 与 Anthropic 的安全测试显示：Claude 在两周内发现 Firefox **22** 个漏洞，其中 **14** 个高危；同时公开信息也显示“发现漏洞”与“稳定武器化利用”之间仍有明显门槛。  
+  **[IT之家（新浪科技转载）]**
+- Reuters 报道 Thinking Machines 与英伟达达成多年合作，包含至少 **1GW** 级别下一代算力部署；行业估算该级别投入可达 **约500亿美元**量级。  
+  **[Reuters]**
 
-### Cursor
-- 追踪状态：**有更新**
-- 最新观测：官方 changelog 以条目页为主（03-04/03-05），无统一语义版本号。
-- 关键变更：
-  - Automations（定时与事件触发）。
-  - JetBrains IDE via ACP。
-  - 团队插件市场、Bugbot Autofix、Cloud Agents with Computer Use。
-- 来源：https://cursor.com/changelog
+━━━━━━━━━━━━━━━━━━━━━━
 
-### OpenCode
-- 追踪状态：**有更新**
-- 最新观测日期：`2026-03-09`
-- 关键变更：
-  - 工作区（workspace）支持推进至 TUI 主线。
-  - 兼容/稳定性修复持续高频（桌面端与 TUI）。
-  - 模型生态接入扩展（如 Copilot GPT-5.4 xhigh）。
-- 来源：https://opencode.ai/changelog
-
-### Frontier Models（OpenAI / Anthropic / Google / xAI）
-- OpenAI：**有更新（本周）**  
-  - 2026-03-05：GPT-5.4 / GPT-5.4 Pro + Tool search + Computer use + 1M context + compaction。  
-  - 来源：https://developers.openai.com/api/docs/changelog
-- Anthropic：**no_updates**（short reason：本次抓取周期内未见新模型版本发布条目，新增主要为政策/声明类新闻）  
-  - 来源：https://www.anthropic.com/news
-- Google：**no_updates**（short reason：本次抓取周期内未验证到新的 Gemini 版本发布公告）
-- xAI：**no_updates**（short reason：本次运行未获取到可验证的新版本发布条目）
+## 今日总结
+今天最有价值的主线是：**AI 正从“讲能力”转向“拼组织与资源配置”**。一边是企业把预算和岗位结构向 AI 倾斜，另一边是资本继续押注能嵌入核心流程的垂直应用，同时算力与平台发布节奏依旧是影响 AI+Web3 风险偏好的快变量。  
+如果你要做决策，可优先盯三件事：**(1) 组织是否为 AI 重排资源，(2) 产品是否进入刚需工作流，(3) 上游算力/平台发布窗口是否临近。**
 
 IDE/CLI changelog
 # AI Frontier Changelog（UTC 2026-03-13）
